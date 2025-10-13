@@ -1,0 +1,417 @@
+/* --- Logo --- */
+.navbar {
+  position: fixed;
+  width: 100%;
+  background-color: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-logo {
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.navbar:not(.bg-white) .navbar-logo,
+.navbar:not(.bg-white) .nav-link {
+  color: white !important;
+}
+
+.navbar:not(.bg-white) .navbar-toggler-icon,
+.navbar:not(.bg-white) .navbar-toggler-icon::before,
+.navbar:not(.bg-white) .navbar-toggler-icon::after {
+  background-color: white !important;
+}
+
+/* --- Search bar --- */
+.search-container {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+}
+
+.search-input {
+  padding-left: 2.5rem;
+  border: 2px solid gray !important;
+  background-color: #fff !important;
+  color: gray;
+  border-radius: 20px;
+  transition: border-color 0.3s;
+}
+
+.search-input::placeholder {
+  color: gray;
+  opacity: 0.8;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: gray !important;
+  box-shadow: none !important;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: gray;
+  z-index: 2;
+}
+
+/* --- Links desktop --- */
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #495057 !important;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ff4d00 !important;
+}
+
+/* --- Dropdowns desktop --- */
+.dropdown-toggle::after {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.mega-menu {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 1.5rem 0;
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.mega-menu-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ff4d00;
+  display: inline-block;
+}
+
+.mega-menu-item {
+  padding: 0.5rem 1rem;
+  color: #495057;
+  text-decoration: none;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 0.25rem;
+  border-left: 3px solid transparent;
+}
+
+.mega-menu-item:hover {
+  background-color: #e3f2fd;
+  color: #ff4d00;
+  border-left-color: #ff4d00;
+  transform: translateX(3px);
+}
+
+/* --- Avatar y carrito --- */
+.perfil-avatar {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+}
+
+.nav-item .fa-shopping-cart {
+  color: #495057;
+  transition: color 0.3s ease;
+}
+
+.nav-item .fa-shopping-cart:hover {
+  color: #ff4d00;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.35em 0.45em;
+}
+
+/* --- Offcanvas (móvil) --- */
+.offcanvas-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.offcanvas-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.offcanvas-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 75%;
+  /* ✅ Ahora ocupa solo el 65% */
+  max-width: 500px;
+  /* opcional, para que no sea demasiado ancho en tablets */
+  height: 100%;
+  background-color: #fff;
+  z-index: 1045;
+  transition: right 0.35s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 16px;
+  /* opcional, estética */
+  border-bottom-left-radius: 16px;
+  /* opcional */
+}
+
+.offcanvas-menu.is-open {
+  right: 0;
+}
+
+/* --- Offcanvas header/footer --- */
+.offcanvas-header-mobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  flex-shrink: 0;
+}
+
+.btn-close-mobile {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1em;
+  border: 0;
+  width: 2.5em;
+  height: 2.5em;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.offcanvas-body-mobile {
+  padding: 0 1rem 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.offcanvas-footer-mobile {
+  padding: 1rem;
+  background-color: #fff;
+  border-top: 1px solid #e9ecef;
+  flex-shrink: 0;
+}
+
+hr {
+  border: none;
+  height: 3px; /* Define el grosor de la línea */
+  background-color: gray; /* Cambia el color de la línea */
+  margin-top: 20px; /* Añade espacio arriba */
+  margin-bottom: 20px; /* Añade espacio abajo */
+  width: 100%; /* Define el ancho de la línea */
+  grid-row: 1;
+}
+
+/* --- Mobile nav items --- */
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 1.2rem 1.25rem;
+  /* Aumentado para mayor separación */
+  text-decoration: none;
+  color: #212529;
+  border-bottom: 1px solid #f0f0f0;
+  /* Borde más sutil */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  /* Transición suave */
+}
+
+/* ✅ Efecto Hoover agregado */
+.mobile-nav-item:hover {
+  background-color: #f8f9fa;
+  /* Color de fondo claro */
+  color: #ff4d00;
+  /* Color de acento de la marca */
+}
+
+/* ✅ El icono también cambia de color en hover */
+.mobile-nav-item:hover .mobile-nav-icon {
+  color: #ff4d00;
+}
+
+.mobile-nav-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-icon {
+  font-size: 1.5rem;
+  color: #495057;
+  margin-right: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mobile-nav-text {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.mobile-nav-text .title {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.mobile-nav-text .subtitle {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.mobile-nav-arrow {
+  font-size: 0.8rem;
+  color: #adb5bd;
+}
+
+/* --- Subvistas mobile --- */
+.btn-back {
+  display: inline-block;
+  padding: 0.5rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #e81168;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.submenu-header-card {
+  display: flex;
+  align-items: center;
+  background-color: #f4f0fc;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.submenu-header-card .mobile-nav-icon {
+  background-color: #fff;
+  color: #ff4d00;
+}
+
+/* --- Accordion (submenús) --- */
+.accordion-flush .accordion-item {
+  background: none;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.accordion-flush .accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-flush .accordion-button {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #212529;
+  background: none;
+  padding: 1.25rem 0.5rem;
+  box-shadow: none;
+}
+
+.accordion-button::after {
+  content: "+";
+  background-image: none;
+  font-size: 2rem;
+  font-weight: 300;
+  transform: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+  content: "−";
+}
+
+.accordion-body {
+  padding: 0 0 1rem 1.5rem;
+}
+
+.submenu-item {
+  display: block;
+  padding: 0.6rem 0;
+  color: #495057;
+  text-decoration: none;
+}
+
+/* --- Toggler personalizado --- */
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem 0.75rem;
+}
+
+.navbar-toggler-icon {
+  background-image: none;
+  position: relative;
+  width: 25px;
+  height: 2.5px;
+  background-color: #000;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 25px;
+  height: 2.5px;
+  background-color: #000;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler-icon::before {
+  top: -7px;
+}
+
+.navbar-toggler-icon::after {
+  top: 7px;
+}
+
+/* --- Responsive --- */
+/* Mega menu más compacto en móviles */
+@media (max-width: 991.98px) {
+  .mega-menu {
+    max-width: 90%;
+    margin: 0 auto;
+    left: auto !important;
+    right: auto !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .offcanvas-menu,
+  .offcanvas-backdrop {
+    display: none !important;
+  }
+}

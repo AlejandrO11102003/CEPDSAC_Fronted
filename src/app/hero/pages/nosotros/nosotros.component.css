@@ -1,0 +1,62 @@
+/* SECCIONES DE POR QUÉ NOSOTROS */
+.why-us {
+  padding: 4rem 2rem;
+  border-radius: 20px;
+}
+
+.why-us {
+  background-color: #f8f9fa;
+}
+
+.why-us h2 {
+  text-align: left;
+  color: black;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.why-us h1 {
+  text-align: left;
+  color: #ff4d00;
+  /* Aumentamos la opacidad (de 0.2 a 0.4) y el desenfoque (de 3px a 5px) */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.why-us-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.why-us-item .icon-container {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  color: #ff4d00;
+}
+
+.why-us-item p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+  .why-us {
+    padding: 2.5rem 1rem;
+  }
+
+  .why-us h1,
+  .why-us h2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .why-us h1 {
+    margin-bottom: 1.5rem;
+  }
+}

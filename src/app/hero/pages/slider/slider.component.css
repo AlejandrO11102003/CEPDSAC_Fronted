@@ -1,0 +1,27 @@
+/* SLIDER PRINCIPAL */
+.slider {
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  min-height: 500px;
+}
+
+.slider .display-3 {
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.slider .lead {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-weight: 400;
+}
+
+.slider .display-3,
+.slider .lead {
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.text-custom-orange {
+  color: #ff4d00;
+}

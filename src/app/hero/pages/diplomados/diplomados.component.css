@@ -1,0 +1,189 @@
+/* Estilos de la sección principal */
+.diplomados {
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+/* Título "Nuestros" */
+.diplomados h1 {
+  text-align: left;
+  color: black;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+/* Título "diplomd.diplomados" (naranja) */
+.diplomados h2 {
+  text-align: left;
+  color: #ff4d00;
+  /* Sombra de texto aplicada */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+/* --- PESTAÑAS (NAV PILLS) --- */
+
+.nav-pills {
+  justify-content: flex-start;
+}
+
+.nav-pills .nav-link {
+  color: #333;
+  font-weight: 600;
+  border-radius: 0;
+  padding: 0.5rem 0;
+  margin-right: 2rem;
+  background-color: transparent;
+  border-bottom: 3px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link:hover {
+  color: #ff4d00;
+  background-color: transparent;
+  border-bottom-color: #ff4d00;
+}
+
+/* --- TARJETAS DE CURSO (CARD-CURSO) --- */
+
+.card-curso {
+  position: relative;
+  height: 350px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: flex-end;
+  /* Sombra prominente para el look de la imagen */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-curso:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Capa de superposición (Degradado oscuro) */
+.card-curso::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Degradado ajustado para el estilo visual oscuro */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.8) 20%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.4) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.card-curso-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  width: 100%;
+  text-align: left;
+}
+
+/* Título principal del curso (grande y audaz) */
+.card-curso .card-title {
+  font-size: clamp(1.5rem, 4vw, 2.8rem);
+  font-weight: 900;
+  margin-bottom: 0.25rem;
+  line-height: 1.1;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Enlace "Ver curso" */
+.card-curso .card-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.card-curso .card-link:hover {
+  color: #ff4d00;
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* --- ESTILOS RESPONSIVE PARA COLUMNAS (.col-custom) --- */
+
+/* Estilo por defecto (móvil: 100%) */
+.col-custom {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  /* Tablet: 50% (2 columnas) */
+  .col-custom {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  /* Escritorio: 25% (4 columnas) */
+  .col-custom {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+}
+
+/* Estilos de desbordamiento horizontal en móvil (scroll-snap) */
+@media (max-width: 767.98px) {
+  .diplomados {
+    padding: 2.5rem 1rem;
+  }
+
+  .diplomados h1,
+  .diplomados h1 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .diplomados h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Asegura que las tarjetas se muestren de forma horizontal en carrusel */
+  .tab-pane .row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .tab-pane .row::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* El tamaño de la tarjeta en móvil para el scroll */
+  .col-custom {
+    flex: 0 0 80%;
+    max-width: 80%;
+    scroll-snap-align: center;
+  }
+}

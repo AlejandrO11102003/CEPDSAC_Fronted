@@ -1,0 +1,40 @@
+.sponsors {
+  padding: 4rem 2rem;
+  margin-top: 1.5rem;
+  border-radius: 20px;
+}
+
+.sponsors {
+  background-color: #ffffff;
+}
+
+.sponsors h1 {
+  text-align: left;
+  color: black;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.sponsors h2 {
+  text-align: left;
+  color: #ff4d00;
+  /* Aumentamos la opacidad (de 0.2 a 0.4) y el desenfoque (de 3px a 5px) */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.sponsors .sponsor-logo {
+  height: 200px;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.sponsors .sponsor-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}

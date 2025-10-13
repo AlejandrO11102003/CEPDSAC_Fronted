@@ -1,0 +1,223 @@
+:host {
+  --footer-bg: #1e2837;
+  --footer-bg-darker: #000000;
+  --footer-text: #bdc3c7;
+  --footer-title-text: #ffffff;
+  --footer-link-hover: #3498db;
+  --footer-border: #34495e;
+  --animation-speed: 0.3s;
+}
+
+/* --- Estructura Principal del Footer --- */
+.site-footer {
+  /* El degradado solicitado */
+  background: linear-gradient(
+    to top,
+    var(--footer-bg-darker),
+    var(--footer-bg) 50%
+  );
+  color: var(--footer-text);
+  font-size: 0.9rem;
+  position: relative;
+  /* Necesario para el SVG y la barra inferior */
+}
+
+/* --- Tipografía --- */
+.footer-title {
+  color: var(--footer-title-text);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.company-name {
+  color: var(--footer-title-text);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.ruc-text {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* --- Logo --- */
+.footer-logo {
+  max-width: 150px;
+  height: auto;
+}
+
+/* --- Enlaces --- */
+.footer-link {
+  color: var(--footer-text);
+  text-decoration: none;
+  transition: color var(--animation-speed) ease,
+    transform var(--animation-speed) ease;
+  display: inline-block;
+  /* para que funcionen las transiciones */
+  padding-bottom: 0.5rem;
+}
+
+.footer-link:hover {
+  color: var(--footer-link-hover);
+  transform: translateX(5px);
+}
+
+/* Estilo específico para enlaces de modal */
+li > a.footer-link {
+  cursor: pointer;
+}
+
+.contact-icon {
+  font-size: 1.1rem;
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  color: var(--footer-link-hover);
+}
+
+/* --- Iconos Sociales --- */
+.social-icons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+@media (min-width: 992px) {
+  .social-icons {
+    justify-content: flex-start;
+  }
+}
+
+.social-icon-link {
+  color: var(--footer-text);
+  font-size: 1rem;
+  transition: all var(--animation-speed) ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--footer-border);
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.social-icon-link:hover {
+  color: #fff;
+  background-color: var(--footer-link-hover);
+  border-color: var(--footer-link-hover);
+  transform: translateY(-5px) scale(1.1);
+}
+
+/* --- Barra Inferior y Separador SVG --- */
+.footer-bottom {
+  position: relative;
+  width: 100%;
+}
+
+.footer-wave {
+  position: absolute;
+  bottom: 100%;
+  /* Se coloca justo encima de la barra de copyright */
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: translateY(1px);
+  /* Ajuste fino para evitar líneas blancas */
+}
+
+.footer-wave svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+  /* Altura de la ola */
+}
+
+.footer-bottom-bar {
+  background-color: var(--footer-bg-darker);
+  position: relative;
+  /* Asegura que esté por encima del SVG */
+  z-index: 10;
+}
+
+/* --- Estilos del Modal --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  opacity: 0;
+  animation: fadeIn var(--animation-speed) forwards;
+}
+
+.modal-content {
+  background-color: #fff;
+  color: #333;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+  animation: scaleUp var(--animation-speed) forwards;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--footer-bg);
+}
+
+.modal-close-btn {
+  border: none;
+  background: none;
+  font-size: 2rem;
+  font-weight: 300;
+  cursor: pointer;
+  color: #888;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: #333;
+}
+
+.modal-body p {
+  line-height: 1.6;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  to {
+    transform: scale(1);
+  }
+}

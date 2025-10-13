@@ -1,0 +1,98 @@
+<footer class="site-footer">
+  <div class="container py-5">
+    <div class="row">
+      <!-- Logo -->
+      <div class="col-lg-4 col-md-12 mb-5 mb-lg-0 text-center text-lg-start">
+        <img
+          src="logo.png"
+          alt="Logo de CEDP S.A.C."
+          class="footer-logo mb-3 mx-auto mx-lg-0"
+        />
+        <h5 class="company-name">
+          CENTRO DE ESTUDIOS Y DESARROLLO PROFESIONAL S.A.C.
+        </h5>
+        <p class="ruc-text">RUC: 20561198684</p>
+      </div>
+
+      <!-- Legal -->
+      <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+        <h5 class="footer-title">Legal</h5>
+        <ul class="list-unstyled">
+          <li *ngFor="let link of legalLinks">
+            <a (click)="link.action?.()" class="footer-link">{{ link.text }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+        <h5 class="footer-title">Contacto</h5>
+        <ul class="list-unstyled">
+          <li *ngFor="let contact of contactInfo">
+            <a
+              [href]="contact.url"
+              target="_blank"
+              [attr.aria-label]="contact.ariaLabel"
+              class="footer-link d-inline-flex align-items-center"
+            >
+              <i [class]="contact.iconClass" class="contact-icon"></i>
+              <span>{{ contact.text }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Redes -->
+      <div class="col-lg-3 col-md-12 text-center text-lg-start">
+        <h5 class="footer-title">Síguenos</h5>
+        <div class="social-icons">
+          <a
+            *ngFor="let social of socialLinks"
+            [href]="social.url"
+            target="_blank"
+            class="social-icon-link"
+            [attr.aria-label]="social.ariaLabel"
+          >
+            <i [class]="social.iconClass"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-wave">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path
+          fill="#1E2837"
+          fill-opacity="1"
+          d="M0,160L48,170.7C96,181,192,203,288,208C384,213,480,203,576,176C672,149,768,107,864,112C960,117,1056,171,1152,181.3C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg>
+    </div>
+    <div class="footer-bottom-bar text-center py-4">
+      <small
+        >&copy; {{ anioActual }} CEDP S.A.C. Todos los derechos
+        reservados.</small
+      >
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" *ngIf="isModalVisible" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ modalTitle }}</h5>
+      <button
+        type="button"
+        class="modal-close-btn"
+        (click)="closeModal()"
+        aria-label="Cerrar"
+      >
+        &times;
+      </button>
+    </div>
+    <div class="modal-body" [innerHTML]="modalContent"></div>
+  </div>
+</div>

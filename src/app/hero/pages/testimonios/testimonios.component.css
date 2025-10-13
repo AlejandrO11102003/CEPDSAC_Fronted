@@ -1,0 +1,94 @@
+.testimonials {
+  padding: 4rem 2rem;
+  border-radius: 20px;
+}
+
+.testimonials {
+  background-color: #ffffff;
+}
+
+.testimonials h2 {
+  text-align: left;
+  color: black;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.testimonials h1 {
+  text-align: left;
+  color: #ff4d00;
+  /* Aumentamos la opacidad (de 0.2 a 0.4) y el desenfoque (de 3px a 5px) */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.testimonial-card {
+  background-color: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 1rem;
+  padding: 2rem;
+  height: 100%;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-card::before {
+  content: "“";
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 5rem;
+  font-family: serif;
+  color: #ff4d00;
+  opacity: 0.15;
+  line-height: 1;
+}
+
+.testimonial-quote {
+  position: relative;
+  z-index: 1;
+  font-size: 1.1rem;
+  color: #343a40;
+}
+
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ff4d00;
+}
+
+.testimonial-link {
+  font-weight: 600;
+  color: #ff4d00;
+  text-decoration: none;
+}
+
+.testimonial-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 767.98px) {
+  .testimonials {
+    padding: 2.5rem 1rem;
+  }
+
+  .testimonials h1,
+  .testimonials h2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .testimonials h1 {
+    margin-bottom: 1.5rem;
+  }
+}
