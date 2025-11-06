@@ -1,3 +1,26 @@
-<form action="">
-  <h3>Iniciar Sesión</h3>
-</form>
+<div class="content">
+  <form class="form-container">
+    <div class="form-header">
+      <h3 class="title">Bienvenido de nuevo</h3>
+      <span class="info">Por favor, ingresa tus datos para iniciar sesión</span>
+    </div>
+
+    <div class="input-container">
+      <div>
+        <label for="">Usuario</label>
+        <input type="text" placeholder="Ingresa tu usuario" />
+      </div>
+      <div>
+        <label for="">Contraseña</label>
+        <input type="password" placeholder="Ingresa tu contraseña" />
+      </div>
+
+      <span>¿Olvidaste tu contraseña?</span>
+    </div>
+
+    <span class="form-footer">
+      ¿No tienes una cuenta?,
+      <a routerLink="/register">Regístrate</a>
+    </span>
+  </form>
+</div>
