@@ -1,0 +1,23 @@
+/* Iconos de Acciones (Editar, Eliminar, Ver) */
+.action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-icons i {
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+/* Colores de los iconos (opcional) */
+.icon-edit:hover { color: #007bff; }
+.icon-delete:hover { color: #dc3545; }
+.icon-view:hover { color: #ff5722; }
+
+/* Ajuste de ancho de columna para las acciones (para que no se estire mucho) */
+.data-table thead th:last-child,
+.data-table tbody td:last-child {
+  width: 100px; 
+  text-align: center;
+}
