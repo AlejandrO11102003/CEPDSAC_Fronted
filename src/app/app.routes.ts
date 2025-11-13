@@ -31,14 +31,12 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'curso',
+        path: 'curso/:id',
         component: CursoComponent,
-        pathMatch: 'full',
       },
       {
-        path: 'diplomado',
+        path: 'diplomado/:id',
         component: DiplomadoComponent,
-        pathMatch: 'full',
       },
       {
         path: 'cursos',
