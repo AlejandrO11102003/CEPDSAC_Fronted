@@ -10,4 +10,5 @@ import { DataTableAdminComponent } from "../../../components/data-table-admin/da
 })
 export class AdminCursosComponent {
   
+  
 }

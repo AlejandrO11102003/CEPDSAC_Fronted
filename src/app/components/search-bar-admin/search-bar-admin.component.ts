@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar-admin',
@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './search-bar-admin.component.css'
 })
 export class SearchBarAdminComponent {
+  @Input() placeholderText: string = 'Search...';
+  @Input() nuevoBotonName: string = 'Generic button'
   
+  @Output() onSearch: any;
 }
