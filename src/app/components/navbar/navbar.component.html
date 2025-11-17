@@ -99,30 +99,37 @@
           <div class="dropdown">
             <a
               class="nav-link dropdown-toggle d-flex align-items-center"
-              routerLink="/login"
+              href="#"
               role="button"
               data-bs-toggle="dropdown"
+              (click)="$event.preventDefault()"
+              aria-haspopup="true"
+              aria-expanded="false"
               ><span>Mi Cuenta</span></a
             >
             <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-user me-2"></i>Perfil</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-cog me-2"></i>Configuración</a
-                >
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a class="dropdown-item text-danger" href="#"
-                  ><i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión</a
-                >
-              </li>
+              <ng-container *ngIf="isAuthenticated(); else loggedOut">
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item text-danger" href="#" (click)="onLogout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión
+                  </a>
+                </li>
+              </ng-container>
+              <ng-template #loggedOut>
+                <li>
+                  <a class="dropdown-item" routerLink="/login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" [routerLink]="['/registro']">
+                    <i class="fas fa-user-plus me-2"></i>Registrarse
+                  </a>
+                </li>
+              </ng-template>
             </ul>
           </div>
         </li>
@@ -168,10 +175,28 @@
         <div class="mobile-nav-text"><span class="title">Carrito</span></div>
       </a>
       <hr class="" />
-      <a class="mobile-nav-item" href="#">
-        <div class="mobile-nav-icon"><i class="fas fa-user-circle"></i></div>
-        <div class="mobile-nav-text"><span class="title">Mi Cuenta</span></div>
-      </a>
+      <ng-container *ngIf="isAuthenticated(); else mobileLoggedOut">
+        <a class="mobile-nav-item" routerLink="/perfil">
+          <div class="mobile-nav-icon"><i class="fas fa-user"></i></div>
+          <div class="mobile-nav-text"><span class="title">Perfil</span></div>
+        </a>
+        <hr class="divisor" />
+        <a class="mobile-nav-item" href="#" (click)="onLogout()">
+          <div class="mobile-nav-icon"><i class="fas fa-sign-out-alt"></i></div>
+          <div class="mobile-nav-text"><span class="title">Cerrar sesión</span></div>
+        </a>
+      </ng-container>
+      <ng-template #mobileLoggedOut>
+        <a class="mobile-nav-item" routerLink="/login">
+          <div class="mobile-nav-icon"><i class="fas fa-sign-in-alt"></i></div>
+          <div class="mobile-nav-text"><span class="title">Iniciar sesión</span></div>
+        </a>
+        <hr class="divisor" />
+        <a class="mobile-nav-item" [routerLink]="['/registro']">
+          <div class="mobile-nav-icon"><i class="fas fa-user-plus"></i></div>
+          <div class="mobile-nav-text"><span class="title">Registrarse</span></div>
+        </a>
+      </ng-template>
     </div>
 
     <!-- Cursos -->

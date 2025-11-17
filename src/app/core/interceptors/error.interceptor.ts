@@ -4,13 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from '../services/error-handler.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 //interceptor global maneja errores http, redirige en 401 y loguea errores
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private authService: AuthService
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -37,7 +39,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handleAuthenticationError(): void {
     //limpiar token y redirigir al login
-    localStorage.removeItem('jwt_token');
+    this.authService.logout();
     this.router.navigate(['/login'], {
       queryParams: { sessionExpired: 'true' }
     });

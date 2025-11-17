@@ -1,8 +1,9 @@
 
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, signal, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, signal, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CursoDiplomadoService } from '../../core/services/curso-diplomado.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,6 +21,10 @@ export class NavbarComponent implements OnInit {
   categoriasDiplomados: Array<{ id: string; nombre: string }> = [];
 
   isHome = false;
+  isAuthenticated = signal(false);
+
+  private authService = inject(AuthService);
+  private platformId = inject(PLATFORM_ID);
 
   constructor(private router: Router, private cursoDiplomadoService: CursoDiplomadoService) {}
 
@@ -27,6 +32,20 @@ export class NavbarComponent implements OnInit {
     this.isHome = this.router.url === '/';
     this.cargarCategoriasCursos();
     this.cargarCategoriasDiplomados();
+    this.isAuthenticated.set(this.authService.isLoggedIn());
+    if (isPlatformBrowser(this.platformId)) {
+      window.addEventListener('storage', (ev) => {
+        if (ev.key === 'jwt_token') {
+          this.isAuthenticated.set(this.authService.isLoggedIn());
+        }
+      });
+    }
+  }
+
+  onLogout(): void {
+    this.authService.logout();
+    this.isAuthenticated.set(false);
+    this.router.navigateByUrl('/');
   }
 
   cargarCategoriasCursos(): void {
@@ -60,6 +79,7 @@ export class NavbarComponent implements OnInit {
   // Se activa cada vez que se hace scroll
   @HostListener('window:scroll', [])
   onWindowScroll() {
+    if (!isPlatformBrowser(this.platformId)) return;
     const isScrolled = window.scrollY > 50;
     if (this.hasScrolled() !== isScrolled) {
       this.hasScrolled.set(isScrolled);
@@ -79,13 +99,17 @@ export class NavbarComponent implements OnInit {
   openOffcanvas(): void {
     this.isOffcanvasOpen.set(true); // Cambiamos el estado a "abierto"
     this.currentView.set('main'); // Al abrir, siempre inicia en la vista principal
-    document.body.style.overflow = 'hidden'; // Bloquea el scroll del body
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = 'hidden'; // Bloquea el scroll del body
+    }
   }
 
   // Cierra el offcanvas
   closeOffcanvas(): void {
     this.isOffcanvasOpen.set(false); // Cambiamos el estado a "cerrado"
-    document.body.style.overflow = 'auto'; // Habilitamos scroll del body
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = 'auto'; // Habilitamos scroll del body
+    }
     // Espera 300ms (tiempo de animación) antes de resetear la vista a "main"
     setTimeout(() => this.currentView.set('main'), 300);
   }

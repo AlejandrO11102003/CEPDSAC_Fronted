@@ -96,6 +96,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'registro', component: RegisterComponent },
   { path: '**', component: MainComponent },
 ];

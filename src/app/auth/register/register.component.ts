@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -26,6 +27,7 @@ export class RegisterComponent {
   private router = inject(Router);
   private paisService = inject(PaisService);
   private tipoService = inject(TipoIdentificacionService);
+  private platformId = inject(PLATFORM_ID);
 
   registerForm: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
@@ -51,7 +53,7 @@ export class RegisterComponent {
     this.fieldErrors.set({});
     this.generalError.set(null);
     this.isSubmitting.set(true);
-    const { nombre, apellido, correo, password, numero_celular, numero_identificacion, id_codigo_pais, id_tipo_identificacion } = this.registerForm.value;
+    const { nombre, apellido, correo, password, numero_celular, numero_identificacion, id_tipo_identificacion } = this.registerForm.value;
     const dto = {
       nombre,
       apellido,
@@ -61,7 +63,6 @@ export class RegisterComponent {
       numeroIdentificacion: numero_identificacion,
       nombrePais: null,
       idTipoIdentificacion: id_tipo_identificacion,
-      idCodigoPais: id_codigo_pais
     };
 
     this.auth.register(dto).subscribe({
@@ -95,7 +96,9 @@ export class RegisterComponent {
     this.registerForm.statusChanges?.subscribe(status => {
       console.log('registerForm.statusChanges ->', status, 'valid=', this.registerForm.valid);
     });
-    try { (window as any).__regComp = this; } catch (e) { /* ignore */ }
+    if (isPlatformBrowser(this.platformId)) {
+      try { (window as any).__regComp = this; } catch (e) { /* ignore */ }
+    }
 
     this.registerForm.valueChanges?.subscribe(() => {
       const current = { ...this.fieldErrors() };
