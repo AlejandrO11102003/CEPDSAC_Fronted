@@ -8,15 +8,18 @@ export interface LoginResponse {
   token: string;
   //podriamos implementar el user en la respuesta, o el rol o name
   user?: any;
+  rol?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   login(correo: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, {
@@ -32,6 +35,7 @@ export class AuthService {
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('jwt_token');
+      localStorage.removeItem('user_role');
     }
   }
 
@@ -47,6 +51,26 @@ export class AuthService {
     } else {
       localStorage.setItem('jwt_token', token);
     }
+  }
+
+  /**
+   * Guardar/limpiar rol de usuario en localStorage (solo en browser)
+   */
+  setRole(role: string | null): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (role === null) {
+      localStorage.removeItem('user_role');
+    } else {
+      localStorage.setItem('user_role', role);
+    }
+  }
+
+  /**
+   * Obtener rol del usuario desde localStorage (solo en browser)
+   */
+  getRole(): string | null {
+    if (!isPlatformBrowser(this.platformId)) return null;
+    return localStorage.getItem('user_role');
   }
 
   isLoggedIn(): boolean {

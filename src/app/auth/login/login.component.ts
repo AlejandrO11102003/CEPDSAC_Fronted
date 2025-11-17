@@ -1,5 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -11,7 +16,7 @@ import { ErrorHandlerService } from '../../core/services/error-handler.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
@@ -22,7 +27,7 @@ export class LoginComponent {
 
   loginForm: FormGroup = this.fb.group({
     correo: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4)]]
+    password: ['', [Validators.required, Validators.minLength(4)]],
   });
 
   errorMessage: string | null = null;
@@ -43,12 +48,23 @@ export class LoginComponent {
         this.isSubmitting = false;
         if (response?.token) {
           this.authService.setToken(response.token);
+          // si el backend devuelve el rol, guardarlo
+          if ((response as any).rol) {
+            this.authService.setRole((response as any).rol);
+          }
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
           try {
             if (returnUrl) {
+              // si hay returnUrl, respetarlo
               this.router.navigateByUrl(returnUrl);
             } else {
-              this.router.navigate(['/']);
+              // redirigir según rol recibido (ADMINISTRADOR -> /admin, en otro caso -> /)
+              const rol = (response as any).rol ?? this.authService.getRole();
+              if (rol && String(rol).toUpperCase().includes('ADMIN')) {
+                this.router.navigate(['/admin']);
+              } else {
+                this.router.navigate(['/']);
+              }
             }
           } catch (e) {
             this.router.navigate(['/']);
@@ -65,7 +81,7 @@ export class LoginComponent {
           err,
           'Error al iniciar sesión. Intenta nuevamente.'
         );
-      }
+      },
     });
   }
 }
