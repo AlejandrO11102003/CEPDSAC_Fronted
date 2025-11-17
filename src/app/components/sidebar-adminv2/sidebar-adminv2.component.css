@@ -1,10 +1,31 @@
-/* --- 1. Contenedor Principal (Host) --- */
-:host {
-  flex-shrink: 0;
-  min-width: 280px; /* Ancho fijo del sidebar */
-  background-color: #ffffff;
-  border-right: 0.5px solid #FF4D00;
+.sidebar {
+  width: 250px;
+  color: #fff;
+  transition: width 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+  overflow-x: hidden;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
 }
+
+.sidebar.closed {
+  width: 80px;
+}
+
+.toggle-btn {
+  color: #013162;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 16px auto;
+  cursor: pointer;
+  font-size: 24px;
+  transition: background 0.2s;
+}
+
+
 
 .sidebar {
   height: 100vh; /* Ocupa el 100% de la altura de la ventana */

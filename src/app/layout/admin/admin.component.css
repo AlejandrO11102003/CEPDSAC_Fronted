@@ -6,6 +6,5 @@
 
 .admin-content {
   flex-grow: 1; /* Hace que el contenido principal ocupe el espacio restante */
-  padding: 2.5rem; /* Espaciado interno como en la imagen */
   overflow-y: auto; /* Permite scroll solo en esta área */
 }
