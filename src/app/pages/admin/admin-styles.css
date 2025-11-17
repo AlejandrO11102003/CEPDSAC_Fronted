@@ -1,0 +1,13 @@
+.titulo_admin{
+    color: #013162;
+    border-bottom: 1px solid #FF4D00;
+    font-weight: 600;
+    padding: 22px;
+}
+
+.contenido-admin{
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

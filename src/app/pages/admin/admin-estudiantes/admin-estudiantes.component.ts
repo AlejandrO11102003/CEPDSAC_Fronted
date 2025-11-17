@@ -3,12 +3,11 @@ import { SearchBarAdminComponent } from "../../../components/search-bar-admin/se
 import { DataTableAdminComponent } from "../../../components/data-table-admin/data-table-admin.component";
 
 @Component({
-  selector: 'app-admin-cursos',
+  selector: 'app-admin-estudiantes',
   imports: [SearchBarAdminComponent, DataTableAdminComponent],
-  templateUrl: './admin-cursos.component.html',
-  styleUrls: ['../../admin/admin-styles.css','./admin-cursos.component.css']
+  templateUrl: './admin-estudiantes.component.html',
+  styleUrls: ['../../admin/admin-styles.css','./admin-estudiantes.component.css']
 })
-export class AdminCursosComponent {
-  
-  
+export class AdminEstudiantesComponent {
+
 }

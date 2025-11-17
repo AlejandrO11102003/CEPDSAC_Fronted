@@ -1,0 +1,38 @@
+.table-responsive {
+  overflow-x: auto;
+  border: 1px solid #ff5722;
+  border-radius: 8px; 
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+/* Encabezado de la Tabla */
+.data-table thead th {
+  background-color: #f7f9fc; /* Fondo claro para el encabezado */
+  color: #334e68;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Celdas del Cuerpo de la Tabla */
+.data-table tbody td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+/* Filas Alternas (opcional para mejor legibilidad) */
+.data-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+

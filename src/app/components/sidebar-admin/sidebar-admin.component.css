@@ -3,7 +3,7 @@
   flex-shrink: 0;
   width: 280px; /* Ancho fijo del sidebar */
   background-color: #ffffff;
-  border-right: 1px solid #dee2e6;
+  border-right: 0.5px solid #FF4D00;
 }
 
 .sidebar {
@@ -21,7 +21,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e0e0e0; /* Línea divisoria */
+  border-bottom: 1px solid #013162; /* Línea divisoria */
 }
 
 .sidebar-logo {

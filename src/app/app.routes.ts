@@ -19,9 +19,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { AdminCursosComponent } from './pages/admin/admin-cursos/admin-cursos.component';
 import { AdminDiplomadosComponent } from './pages/admin/admin-diplomados/admin-diplomados.component';
-import { AdminTestimoniosComponent } from './pages/admin/admin-testimonios/admin-testimonios.component';
-import {AdminSponsorsComponent} from './pages/admin/admin-sponsors/admin-sponsors.component';
-
+import { AdminEstudiantesComponent } from './pages/admin/admin-estudiantes/admin-estudiantes.component';
+import { AdminProfesoresComponent } from './pages/admin/admin-profesores/admin-profesores.component';
 
 export const routes: Routes = [
   {
@@ -58,7 +57,7 @@ export const routes: Routes = [
     component: AdminComponent,
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: DashboardComponent,
         pathMatch: 'full',
       },
@@ -73,13 +72,13 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'testimonios',
-        component: AdminTestimoniosComponent,
+        path: 'estudiantes',
+        component: AdminEstudiantesComponent,
         pathMatch: 'full',
       },
       {
-        path: 'sponsors',
-        component: AdminSponsorsComponent,
+        path: 'profesores',
+        component: AdminProfesoresComponent,
         pathMatch: 'full',
       }
     ],

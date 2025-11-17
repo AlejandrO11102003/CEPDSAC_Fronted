@@ -1,0 +1,40 @@
+.btn {
+  color: white;
+  font-weight: bold;
+}
+
+.filtro {
+  background-color: #013162;
+}
+
+.filtro:hover {
+  background-color: #0869f1;
+}
+
+.nuevo {
+  background-color: #ff4d00;
+}
+
+.nuevo:hover {
+  background-color: #ff751a;
+}
+
+.cuadro-busqueda {
+  display: flex;
+  color: #013162;
+  border: 2px solid #013162;
+  border-radius: 5px;
+  align-items: center;
+  gap: 10px;
+  padding-left: 10px;
+  width: 50%;
+  input {
+    padding: 5px;
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+  ::placeholder {
+    font-weight: bold;
+  }
+}
