@@ -47,6 +47,16 @@
     </aside>
 
     <section class="col-lg-9">
+      <div *ngIf="isLoading" class="text-center mt-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-warning mt-4" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <div
         class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-2"
       >
@@ -70,12 +80,13 @@
         <div class="col-sm-6 col-md-4" *ngFor="let curso of cursos">
           <div class="card curso-card h-100">
             <img
-              [src]="curso.imgSrc"
+              [src]="getImg(curso)"
               class="card-img-top"
-              [alt]="curso.title"
+              [alt]="curso.nombre"
             />
             <div class="card-body">
-              <h6 class="card-title fw-bold">{{ curso.title }}</h6>
+              <h6 class="card-title fw-bold">{{ curso.nombre }}</h6>
+              <p class="text-muted mb-0">{{ curso.categoria }}</p>
             </div>
 
             <div
@@ -86,6 +97,10 @@
           </div>
         </div>
       </div>
+
+      <p *ngIf="!isLoading && cursos.length === 0" class="text-muted mt-4">
+        No hay cursos disponibles.
+      </p>
     </section>
   </div>
 </section>

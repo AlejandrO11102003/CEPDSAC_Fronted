@@ -32,6 +32,10 @@ export class AuthService {
     return this.http.post(`${environment.apiUrl}/usuarios`, payload);
   }
 
+  forgotPassword(correo: string) {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { correo });
+  }
+
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('jwt_token');

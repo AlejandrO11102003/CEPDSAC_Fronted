@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import Swal from 'sweetalert2';
+import { lastValueFrom } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -24,6 +26,8 @@ export class LoginComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private errorHandler = inject(ErrorHandlerService);
+
+  private authSvc = this.authService; // alias local para usar en el modal
 
   loginForm: FormGroup = this.fb.group({
     correo: ['', [Validators.required, Validators.email]],
@@ -83,5 +87,43 @@ export class LoginComponent {
         );
       },
     });
+  }
+
+  async openForgotPassword(event: Event): Promise<void> {
+    event.preventDefault();
+    const currentEmail = this.loginForm.get('correo')?.value || '';
+
+    const result = await Swal.fire<string>({
+      title: 'Recuperar contraseña',
+      input: 'email',
+      inputLabel: 'Introduce tu correo',
+      inputValue: currentEmail,
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      preConfirm: async (value) => {
+        if (!value) {
+          Swal.showValidationMessage('El correo es requerido');
+          return;
+        }
+        try {
+          // convertir Observable a Promise
+          await lastValueFrom(this.authSvc.forgotPassword(value));
+          return value;
+        } catch (err: any) {
+          const msg = err?.error?.mensaje ?? err?.message ?? 'Error al enviar la solicitud';
+          Swal.showValidationMessage(msg);
+          throw err;
+        }
+      }
+    });
+
+    if (result && result.value) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Enviado',
+        text: 'Si el correo existe en nuestro sistema, recibirás un email con instrucciones.'
+      });
+    }
   }
 }
