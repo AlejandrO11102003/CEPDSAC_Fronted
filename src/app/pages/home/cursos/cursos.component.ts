@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink} from '@angular/router';
 import { CursoDiplomadoService } from '../../../core/services/curso-diplomado.service';
 import { CursoDiplomado } from '../../../core/models/curso-diplomado.model';
 
