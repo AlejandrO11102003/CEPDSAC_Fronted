@@ -9,7 +9,7 @@ import { CursoDiplomado } from '../../../core/models/curso-diplomado.model';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './cursos.component.html',
-  styleUrl: './cursos.component.css',
+  styleUrls: ['./cursos.component.css'],
 })
 export class CursosComponent implements OnInit {
   private cursoDiplomadoService = inject(CursoDiplomadoService);

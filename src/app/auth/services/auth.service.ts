@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment';
@@ -15,7 +16,7 @@ export interface LoginResponse {
 
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   login(correo: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, {
@@ -24,15 +25,55 @@ export class AuthService {
     });
   }
 
+  // Register a new user — maps to backend /api/usuarios
+  register(payload: any) {
+    return this.http.post(`${environment.apiUrl}/usuarios`, payload);
+  }
+
   logout(): void {
-    localStorage.removeItem('jwt_token');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('jwt_token');
+    }
   }
 
   getToken(): string | null {
+    if (!isPlatformBrowser(this.platformId)) return null;
     return localStorage.getItem('jwt_token');
   }
 
+  setToken(token: string | null): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (token === null) {
+      localStorage.removeItem('jwt_token');
+    } else {
+      localStorage.setItem('jwt_token', token);
+    }
+  }
+
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    return !!token && this.isTokenValid(token);
+  }
+
+  getTokenPayload(token?: string): any | null {
+    const t = token ?? this.getToken();
+    if (!t) return null;
+    try {
+      const parts = t.split('.');
+      if (parts.length !== 3) return null;
+      const payload = parts[1];
+      const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+      return JSON.parse(decodeURIComponent(escape(decoded)));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  isTokenValid(token?: string): boolean {
+    const payload = this.getTokenPayload(token);
+    if (!payload) return false;
+    if (!payload.exp) return true;
+    const now = Math.floor(Date.now() / 1000);
+    return payload.exp > now;
   }
 }
