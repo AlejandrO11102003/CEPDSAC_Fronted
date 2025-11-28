@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SearchBarAdminComponent } from "../../../components/search-bar-admin/search-bar-admin.component";
-import { DataTableAdminComponent } from "../../../components/data-table-admin/data-table-admin.component";
+import { SearchBarAdminComponent } from '../../../components/search-bar-admin/search-bar-admin.component';
+import { DataTableAdminComponent } from '../../../components/data-table-admin/data-table-admin.component';
 import { CursoDiplomadoService } from '../../../core/services/curso-diplomado.service';
 import { CursoDiplomado } from '../../../core/models/curso-diplomado.model';
 
@@ -8,23 +8,26 @@ import { CursoDiplomado } from '../../../core/models/curso-diplomado.model';
   selector: 'app-admin-diplomados',
   imports: [SearchBarAdminComponent, DataTableAdminComponent],
   templateUrl: './admin-diplomados.component.html',
-  styleUrls: ['../../admin/admin-styles.css','./admin-diplomados.component.css']
+  styleUrls: [
+    '../../admin/admin-styles.css',
+    './admin-diplomados.component.css',
+  ],
 })
 export class AdminDiplomadosComponent {
-  cursos: CursoDiplomado[] = [];
+  diplomado: CursoDiplomado[] = [];
 
-  constructor(private cursosService: CursoDiplomadoService) {}
+  constructor(private diplomadoService: CursoDiplomadoService) {}
 
   ngOnInit(): void {
-    this.cargarCursos();
+    this.cargardiplomado();
   }
 
-  cargarCursos() {
-    this.cursosService.listar().subscribe({
+  cargardiplomado() {
+    this.diplomadoService.listar().subscribe({
       //filtramos solo los diplomados
-      next: (data) => this.cursos = data.filter(curso => curso.tipo != 'CURSO'),
-      error: (err) => console.error('Error cargando cursos', err)
+      next: (data) =>
+        (this.diplomado = data.filter((curso) => curso.tipo != 'CURSO')),
+      error: (err) => console.error('Error cargando diplomados', err),
     });
   }
-
 }

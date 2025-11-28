@@ -8,11 +8,11 @@ export interface CursoDiplomado {
   };
 }
 
-export interface CursoDiplomadoViewAdmin{
+export interface CursoDiplomadoViewAdmin {
   idCursoDiplomado: number;
   idCategoria: number;
   nombreCategoria: string;
-  tipo: string; // "CURSO" o "DIPLOMADO"
+  tipo: string; // "CURSO", "DIPLOMADO"
   otorgaCertificado: boolean;
   titulo: string;
   urlCurso: string;
@@ -38,7 +38,7 @@ export interface CursoDetalle {
   idCursoDiplomado: number;
   idCategoria?: number;
   nombreCategoria?: string;
-  tipo: boolean; // false: CURSO, true: DIPLOMADO
+  tipo: string; // "CURSO", "DIPLOMADO"
   otorgaCertificado: boolean;
   titulo: string;
   urlCurso?: string;

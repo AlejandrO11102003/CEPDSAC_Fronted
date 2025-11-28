@@ -2,13 +2,16 @@
   <h1 class="titulo_admin">Diplomados</h1>
   <div class="contenido-admin">
     <app-search-bar-admin
-    placeholderText="Buscar diplomados..."
-    nuevoBotonName="Nuevo Diplomado"
+      placeholderText="Buscar diplomados..."
+      nuevoBotonName="Nuevo Diplomado"
     />
     <app-data-table-admin
-    [columns]="[{ key: 'idCursoDiplomado', label: 'ID' },{key: 'titulo', label: 'Título'} , { key: 'nombreCategoria', label: 'Categoría' }, { key: 'otorgaCertificado', label: 'Certificado' }]"
-    [data]="cursos"
+      [columns]="[
+        { key: 'titulo', label: 'Título' },
+        { key: 'nombreCategoria', label: 'Categoría' },
+        { key: 'otorgaCertificado', label: 'Certificado' }
+      ]"
+      [data]="diplomado"
     />
-    
   </div>
 </section>

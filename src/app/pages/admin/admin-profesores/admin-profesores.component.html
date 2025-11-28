@@ -2,11 +2,17 @@
   <h1 class="titulo_admin">Profesores</h1>
   <div class="contenido-admin">
     <app-search-bar-admin
-    placeholderText="Buscar profesores"
-    nuevoBotonName="Nuevo Profesor"/>
+      placeholderText="Buscar profesores"
+      nuevoBotonName="Nuevo Profesor"
+    />
     <app-data-table-admin
-    [columns]="[{ key: 'idUsuario', label: 'ID' },{key: 'nombre', label: 'Nombre'} , { key: 'apellido', label: 'Apellido' }, { key: 'correo', label: 'Correo' }, { key: 'activo', label: 'Estado' }]"
-    [data]="profesores"
+      [columns]="[
+        { key: 'nombre', label: 'Nombre' },
+        { key: 'apellido', label: 'Apellido' },
+        { key: 'correo', label: 'Correo' },
+        { key: 'activo', label: 'Estado' }
+      ]"
+      [data]="profesores"
     />
   </div>
 </section>

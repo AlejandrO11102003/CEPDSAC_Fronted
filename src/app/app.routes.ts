@@ -40,10 +40,12 @@ export const routes: Routes = [
       {
         path: 'curso/:id',
         component: CursoComponent,
+        pathMatch: 'full',
       },
       {
         path: 'diplomado/:id',
         component: DiplomadoComponent,
+        pathMatch: 'full',
       },
       {
         path: 'cursos',
@@ -58,6 +60,7 @@ export const routes: Routes = [
       {
         path: 'matricula/:cursoId/:programacionId',
         component: MatriculaGeneralComponent,
+        pathMatch: 'full',
       },
       {
         path: 'matricula/:cursoId/:programacionId',
@@ -110,7 +113,6 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'registro', component: RegisterComponent },
   { path: 'reset-password', component: RecuperarPassComponent },
   { path: '**', component: MainComponent },
 ];

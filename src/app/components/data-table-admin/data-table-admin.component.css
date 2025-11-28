@@ -1,7 +1,7 @@
 .table-responsive {
   overflow-x: auto;
   border: 1px solid #ff5722;
-  border-radius: 8px; 
+  border-radius: 8px;
 }
 
 .data-table {
@@ -35,4 +35,3 @@
 .data-table tbody tr:hover {
   background-color: #f0f0f0;
 }
-

@@ -3,7 +3,6 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from '../services/error-handler.service';
-import { AuthService } from '../../auth/services/auth.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
@@ -11,7 +10,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error) => {
-
       // Log automático en desarrollo (si quieres hacer el check de prod, aquí)
       console.error('HTTP Error:', {
         url: req.url,

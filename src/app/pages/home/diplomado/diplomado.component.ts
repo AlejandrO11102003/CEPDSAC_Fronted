@@ -9,9 +9,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-diplomado',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './diplomado.component.html',
-  styleUrl: './diplomado.component.css',
+  styleUrls: ['./diplomado.component.css'],
 })
 export class DiplomadoComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -32,6 +33,7 @@ export class DiplomadoComponent implements OnInit {
     } else {
       this.toast.error('ID de diplomado no válido');
       this.isLoading.set(false);
+      this.router.navigate(['/diplomados']);
     }
   }
 
@@ -39,7 +41,6 @@ export class DiplomadoComponent implements OnInit {
     this.isLoading.set(true);
     this.cursoDiplomadoService.obtenerDetalle(id).subscribe({
       next: (data) => {
-        console.log('diplomado detalle:', data);
         this.diplomado.set(data);
         this.isLoading.set(false);
       },
@@ -48,35 +49,40 @@ export class DiplomadoComponent implements OnInit {
         const mensaje = this.errorHandler.getErrorMessage(err);
         this.toast.error(mensaje);
         this.isLoading.set(false);
-      }
+      },
     });
   }
 
   matricularPrimer(): void {
     const d = this.diplomado();
     if (!d || !this.cursoId) {
-      this.toast.error('No se pudo iniciar matrícula: diplomado no cargado.');
+      this.toast.error('Datos no cargados correctamente.');
       return;
     }
     const programaciones = d.programaciones || [];
     if (programaciones.length === 0) {
-      this.toast.error('No hay programaciones disponibles para matricular.');
+      this.toast.error('No hay inicios programados actualmente.');
       return;
     }
     const primerProg = programaciones[0];
-    const progId = primerProg.idProgramacionCurso;
-    if (!progId) {
-      this.toast.error('ID de programación no disponible.');
-      return;
+    this.router.navigate([
+      '/matricula',
+      this.cursoId,
+      primerProg.idProgramacionCurso,
+    ]);
+  }
+
+  irAMatricula(progId: number) {
+    if (this.cursoId && progId) {
+      this.router.navigate(['/matricula', this.cursoId, progId]);
     }
-    this.router.navigate(['/matricula', this.cursoId, progId]);
   }
 
   getModalidadLabel(modalidad: string): string {
     const labels: Record<string, string> = {
-      'PRESENCIAL': 'Presencial',
-      'VIRTUAL': 'Virtual',
-      'VIRTUAL_24_7': 'Virtual 24/7'
+      PRESENCIAL: 'Presencial',
+      VIRTUAL: 'Virtual',
+      VIRTUAL_24_7: 'Virtual 24/7',
     };
     return labels[modalidad] || modalidad;
   }
@@ -93,14 +99,12 @@ export class DiplomadoComponent implements OnInit {
   getMaterialesArray(): string[] {
     const d = this.diplomado();
     return d?.materialesIncluidos
-      ? d.materialesIncluidos.split('|').filter(m => m.trim())
+      ? d.materialesIncluidos.split('|').filter((m) => m.trim())
       : [];
   }
 
   getRequisitosArray(): string[] {
     const d = this.diplomado();
-    return d?.requisitos
-      ? d.requisitos.split('|').filter(r => r.trim())
-      : [];
+    return d?.requisitos ? d.requisitos.split('|').filter((r) => r.trim()) : [];
   }
 }

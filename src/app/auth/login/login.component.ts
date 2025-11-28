@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
@@ -16,7 +16,7 @@ import { ErrorHandlerService } from '../../core/services/error-handler.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -108,7 +108,7 @@ export class LoginComponent {
         title: 'custom-swal-title',
         input: 'custom-swal-input',
         confirmButton: 'custom-swal-confirm',
-        cancelButton: 'custom-swal-cancel'
+        cancelButton: 'custom-swal-cancel',
       },
       preConfirm: async (value) => {
         if (!value) {
@@ -120,11 +120,14 @@ export class LoginComponent {
           await lastValueFrom(this.authSvc.forgotPassword(value));
           return value;
         } catch (err: any) {
-          const msg = err?.error?.mensaje ?? err?.message ?? 'Error al enviar la solicitud';
+          const msg =
+            err?.error?.mensaje ??
+            err?.message ??
+            'Error al enviar la solicitud';
           Swal.showValidationMessage(msg);
           throw err;
         }
-      }
+      },
     });
 
     if (result && result.value) {
@@ -138,8 +141,8 @@ export class LoginComponent {
         customClass: {
           popup: 'custom-swal-popup',
           title: 'custom-swal-title',
-          confirmButton: 'custom-swal-confirm'
-        }
+          confirmButton: 'custom-swal-confirm',
+        },
       });
     }
   }
