@@ -5,23 +5,25 @@
 ></div>
 
 <nav
-  class="navbar navbar-expand-lg navbar-light sticky-top"
-  [class.bg-white]="hasScrolled()"
-  [class.shadow-sm]="hasScrolled()"
-  [class.navbar-scrolled]="hasScrolled()"
+  class="navbar navbar-expand-lg navbar-light fixed-top transition-navbar"
+  [class.navbar-transparent]="isHome && !hasScrolled()"
+  [class.bg-white]="!isHome || hasScrolled()"
+  [class.shadow-sm]="!isHome || hasScrolled()"
 >
   <div class="container">
-    <!-- Logo -->
-    <a class="navbar-logo d-flex align-items-center" href="/">
-      <img src="logo.png" alt="Logo CEDP" class="me-2" style="height: 75px" />
+    <a class="navbar-logo d-flex align-items-center" routerLink="/">
+      <img
+        src="logo.png"
+        alt="Logo CEDP"
+        class="me-2 logo-img"
+        style="height: 75px"
+      />
     </a>
 
-    <!-- Botón Mobile -->
     <button class="navbar-toggler" type="button" (click)="toggleOffcanvas()">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú Desktop -->
     <div
       class="collapse navbar-collapse d-none d-lg-flex"
       id="navbarNavDesktop"
@@ -36,93 +38,118 @@
       </div>
       <ul class="navbar-nav ms-auto align-items-lg-center">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
             ><i class="fas fa-home me-1"></i> Inicio</a
           >
         </li>
 
-        <!-- Cursos -->
-        <li class="nav-item dropdown position-static">
+        <li class="nav-item dropdown position-static hover-trigger">
           <a
             class="nav-link dropdown-toggle"
             routerLink="/cursos"
             routerLinkActive="active"
-            role="button"
-            data-bs-toggle="dropdown"
           >
             <i class="fas fa-book me-1"></i> Cursos
           </a>
           <div class="dropdown-menu mega-menu">
             <div class="container">
               <div class="row">
-                <div class="col-lg-3 col-md-6 mega-menu-category" *ngFor="let categoria of categoriasCursos">
+                <div
+                  class="col-lg-3 col-md-6 mega-menu-category"
+                  *ngFor="let categoria of categoriasCursos"
+                >
                   <h6 class="mega-menu-title">
                     <i class="fas fa-book me-2"></i> {{ categoria.nombre }}
                   </h6>
-                  <a [routerLink]="['/cursos']" class="mega-menu-item">Ver cursos</a>
+                  <a
+                    [routerLink]="['/cursos']"
+                    [queryParams]="{ cat: categoria.id }"
+                    class="mega-menu-item"
+                    >Ver cursos</a
+                  >
                 </div>
               </div>
             </div>
           </div>
         </li>
 
-        <!-- DIPLOMADOS con CARDS -->
-        <!-- DIPLOMADOS (ahora igual a CURSOS) -->
-        <li class="nav-item dropdown position-static">
+        <li class="nav-item dropdown position-static hover-trigger">
           <a
             class="nav-link dropdown-toggle"
             routerLink="/diplomados"
             routerLinkActive="active"
-            role="button"
-            data-bs-toggle="dropdown"
           >
             <i class="fas fa-certificate me-1"></i> Diplomados
           </a>
           <div class="dropdown-menu mega-menu">
             <div class="container">
               <div class="row">
-                <div class="col-lg-3 col-md-6 mega-menu-category" *ngFor="let categoria of categoriasDiplomados">
+                <div
+                  class="col-lg-3 col-md-6 mega-menu-category"
+                  *ngFor="let categoria of categoriasDiplomados"
+                >
                   <h6 class="mega-menu-title">
-                    <i class="fas fa-certificate me-2"></i> {{ categoria.nombre }}
+                    <i class="fas fa-certificate me-2"></i>
+                    {{ categoria.nombre }}
                   </h6>
-                  <a [routerLink]="['/diplomados']" class="mega-menu-item">Ver diplomados</a>
+                  <a
+                    [routerLink]="['/diplomados']"
+                    [queryParams]="{ cat: categoria.id }"
+                    class="mega-menu-item"
+                    >Ver diplomados</a
+                  >
                 </div>
               </div>
             </div>
           </div>
         </li>
-        <!-- Carrito + Cuenta -->
         <li class="nav-item d-flex align-items-center ms-lg-3">
           <a class="nav-link position-relative me-3" href="#"
             ><i class="fas fa-shopping-cart fa-lg"></i
           ></a>
-          <div class="dropdown">
+          <div class="dropdown hover-trigger">
             <a
               class="nav-link dropdown-toggle d-flex align-items-center"
-              routerLink="/login"
-              role="button"
-              data-bs-toggle="dropdown"
+              href="#"
+              (click)="$event.preventDefault()"
               ><span>Mi Cuenta</span></a
             >
             <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-user me-2"></i>Perfil</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-cog me-2"></i>Configuración</a
-                >
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a class="dropdown-item text-danger" href="#"
-                  ><i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión</a
-                >
-              </li>
+              <ng-container *ngIf="isAuthenticated(); else loggedOut">
+                <li>
+                  <a class="dropdown-item" routerLink="/admin">
+                    <i class="fas fa-user me-2"></i>Mi Perfil
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-danger"
+                    href="#"
+                    (click)="onLogout()"
+                  >
+                    <i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión
+                  </a>
+                </li>
+              </ng-container>
+              <ng-template #loggedOut>
+                <li>
+                  <a class="dropdown-item" routerLink="/login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" [routerLink]="['/registro']">
+                    <i class="fas fa-user-plus me-2"></i>Registrarse
+                  </a>
+                </li>
+              </ng-template>
             </ul>
           </div>
         </li>
@@ -131,7 +158,6 @@
   </div>
 </nav>
 
-<!-- 📱 Mobile Offcanvas -->
 <div class="offcanvas-menu" [class.is-open]="isOffcanvasOpen()">
   <div class="offcanvas-header-mobile">
     <a class="btn-back" *ngIf="currentView() !== 'main'" (click)="goBack()"
@@ -146,7 +172,7 @@
 
   <div class="offcanvas-body-mobile">
     <div *ngIf="currentView() === 'main'" class="mobile-view">
-      <a class="mobile-nav-item" href="/">
+      <a class="mobile-nav-item" routerLink="/">
         <div class="mobile-nav-icon"><i class="fas fa-home"></i></div>
         <div class="mobile-nav-text"><span class="title">Inicio</span></div>
       </a>
@@ -168,20 +194,46 @@
         <div class="mobile-nav-text"><span class="title">Carrito</span></div>
       </a>
       <hr class="" />
-      <a class="mobile-nav-item" href="#">
-        <div class="mobile-nav-icon"><i class="fas fa-user-circle"></i></div>
-        <div class="mobile-nav-text"><span class="title">Mi Cuenta</span></div>
-      </a>
+      <ng-container *ngIf="isAuthenticated(); else mobileLoggedOut">
+        <a class="mobile-nav-item" routerLink="/perfil">
+          <div class="mobile-nav-icon"><i class="fas fa-user"></i></div>
+          <div class="mobile-nav-text"><span class="title">Perfil</span></div>
+        </a>
+        <hr class="divisor" />
+        <a class="mobile-nav-item" href="#" (click)="onLogout()">
+          <div class="mobile-nav-icon"><i class="fas fa-sign-out-alt"></i></div>
+          <div class="mobile-nav-text">
+            <span class="title">Cerrar sesión</span>
+          </div>
+        </a>
+      </ng-container>
+      <ng-template #mobileLoggedOut>
+        <a class="mobile-nav-item" routerLink="/login">
+          <div class="mobile-nav-icon"><i class="fas fa-sign-in-alt"></i></div>
+          <div class="mobile-nav-text">
+            <span class="title">Iniciar sesión</span>
+          </div>
+        </a>
+        <hr class="divisor" />
+        <a class="mobile-nav-item" [routerLink]="['/registro']">
+          <div class="mobile-nav-icon"><i class="fas fa-user-plus"></i></div>
+          <div class="mobile-nav-text">
+            <span class="title">Registrarse</span>
+          </div>
+        </a>
+      </ng-template>
     </div>
 
-    <!-- Cursos -->
     <div *ngIf="currentView() === 'cursos'" class="mobile-view">
       <div class="submenu-header-card">
         <div class="mobile-nav-icon"><i class="fas fa-book-open"></i></div>
         <div class="mobile-nav-text"><span class="title">Cursos</span></div>
       </div>
       <div class="accordion accordion-flush" id="cursosSubmenuAccordion">
-        <div class="accordion-item" *ngFor="let categoria of categoriasCursos; let idx = index">
+        <div
+          class="accordion-item"
+          *ngFor="let categoria of categoriasCursos; let idx = index"
+        >
           <h2 class="accordion-header">
             <button
               class="accordion-button collapsed"
@@ -198,21 +250,28 @@
             data-bs-parent="#cursosSubmenuAccordion"
           >
             <div class="accordion-body">
-              <a [routerLink]="['/cursos']" class="submenu-item">Ver cursos de {{ categoria.nombre }}</a>
+              <a
+                [routerLink]="['/cursos']"
+                [queryParams]="{ cat: categoria.id }"
+                class="submenu-item"
+                >Ver cursos de {{ categoria.nombre }}</a
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Diplomados -->
     <div *ngIf="currentView() === 'diplomados'" class="mobile-view">
       <div class="submenu-header-card">
         <div class="mobile-nav-icon"><i class="fas fa-stamp"></i></div>
         <div class="mobile-nav-text"><span class="title">Diplomados</span></div>
       </div>
       <div class="accordion accordion-flush" id="diplomadosSubmenuAccordion">
-        <div class="accordion-item" *ngFor="let categoria of categoriasDiplomados; let idx = index">
+        <div
+          class="accordion-item"
+          *ngFor="let categoria of categoriasDiplomados; let idx = index"
+        >
           <h2 class="accordion-header">
             <button
               class="accordion-button collapsed"
@@ -229,7 +288,12 @@
             data-bs-parent="#diplomadosSubmenuAccordion"
           >
             <div class="accordion-body">
-              <a [routerLink]="['/diplomados']" class="submenu-item">Ver diplomados de {{ categoria.nombre }}</a>
+              <a
+                [routerLink]="['/diplomados']"
+                [queryParams]="{ cat: categoria.id }"
+                class="submenu-item"
+                >Ver diplomados de {{ categoria.nombre }}</a
+              >
             </div>
           </div>
         </div>

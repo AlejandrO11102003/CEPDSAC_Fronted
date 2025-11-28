@@ -1,28 +1,31 @@
-<div class="table-responsive">
-  <table class="data-table">
-    <thead>
+<div class="table-responsive shadow-sm rounded">
+  <table class="data-table table table-hover bg-white mb-0">
+    <thead class="bg-light">
       <tr>
-        <th>Diplomado</th>
-        <th>Categoría</th>
-        <th>Modalidad</th>
-        <th>Estudiantes</th>
-        <th>Duración</th>
-        <th>Precio</th>
-        <th>Rating</th>
-        <th>Acciones</th>
+        <th *ngFor="let col of columns" class="py-3 px-4">{{ col.label }}</th>
+        <th class="py-3 px-4 text-center">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Diseño Web</td>
-        <td>Tecnología</td>
-        <td>Remoto</td>
-        <td>43</td>
-        <td>3 meses</td>
-        <td>S/350</td>
-        <td>4.8/5</td>
+      <tr *ngFor="let item of data">
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.key === 'otorgaCertificado'; else textVal">
+            <span
+              class="badge"
+              [class.bg-success]="item[col.key]"
+              [class.bg-secondary]="!item[col.key]"
+            >
+              {{ item[col.key] ? "Sí" : "No" }}
+            </span>
+          </ng-container>
+          <ng-template #textVal>{{ item[col.key] }}</ng-template>
+        </td>
         <td>
-          <app-action-buttons-admin />
+          <app-action-buttons-admin
+            (onEdit)="onEdit.emit(item)"
+            (onDelete)="onDelete.emit(item)"
+          >
+          </app-action-buttons-admin>
         </td>
       </tr>
     </tbody>

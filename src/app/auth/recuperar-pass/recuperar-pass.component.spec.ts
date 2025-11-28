@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminSponsorsComponent } from './admin-sponsors.component';
+import { RecuperarPassComponent } from './recuperar-pass.component';
 
-describe('AdminSponsorsComponent', () => {
-  let component: AdminSponsorsComponent;
-  let fixture: ComponentFixture<AdminSponsorsComponent>;
+describe('RecuperarPassComponent', () => {
+  let component: RecuperarPassComponent;
+  let fixture: ComponentFixture<RecuperarPassComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminSponsorsComponent]
+      imports: [RecuperarPassComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminSponsorsComponent);
+    fixture = TestBed.createComponent(RecuperarPassComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

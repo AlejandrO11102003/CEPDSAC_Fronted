@@ -2,7 +2,12 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment';
-import { CursoDiplomado, CursoDetalle } from '../models/curso-diplomado.model';
+import {
+  CursoDiplomado,
+  CursoDetalle,
+  CursoDiplomadoViewAdmin,
+} from '../models/curso-diplomado.model';
+import { Categoria } from '../models/categoria.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +15,7 @@ import { CursoDiplomado, CursoDetalle } from '../models/curso-diplomado.model';
 export class CursoDiplomadoService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/cursos-diplomados`;
+  private apiUrlCategorias = `${environment.apiUrl}/categorias`;
 
   listarIndex(): Observable<CursoDiplomado[]> {
     return this.http.get<CursoDiplomado[]>(`${this.apiUrl}/listar-index`);
@@ -27,8 +33,8 @@ export class CursoDiplomadoService {
     return this.http.get<CursoDetalle>(`${this.apiUrl}/detalle/${id}`);
   }
 
-  listar(): Observable<CursoDiplomado[]> {
-    return this.http.get<CursoDiplomado[]>(`${this.apiUrl}/listar`);
+  listar(): Observable<CursoDiplomadoViewAdmin[]> {
+    return this.http.get<CursoDiplomadoViewAdmin[]>(`${this.apiUrl}/listar`);
   }
 
   obtenerPorId(id: number): Observable<CursoDiplomado> {
@@ -41,5 +47,19 @@ export class CursoDiplomadoService {
 
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+  }
+
+  actualizar(
+    id: number,
+    curso: Partial<CursoDiplomado>
+  ): Observable<CursoDiplomado> {
+    return this.http.put<CursoDiplomado>(
+      `${this.apiUrl}/actualizar/${id}`,
+      curso
+    );
+  }
+
+  listarCategorias(): Observable<Categoria[]> {
+    return this.http.get<Categoria[]>(`${this.apiUrlCategorias}/listar`);
   }
 }

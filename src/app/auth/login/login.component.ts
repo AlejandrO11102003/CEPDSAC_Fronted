@@ -1,7 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { lastValueFrom } from 'rxjs';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
@@ -9,19 +16,22 @@ import { ErrorHandlerService } from '../../core/services/error-handler.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private errorHandler = inject(ErrorHandlerService);
+
+  private authSvc = this.authService; // alias local para usar en el modal
 
   loginForm: FormGroup = this.fb.group({
     correo: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4)]]
+    password: ['', [Validators.required, Validators.minLength(4)]],
   });
 
   errorMessage: string | null = null;
@@ -41,8 +51,28 @@ export class LoginComponent {
       next: (response) => {
         this.isSubmitting = false;
         if (response?.token) {
-          localStorage.setItem('jwt_token', response.token);
-          this.router.navigate(['/dashboard']);
+          this.authService.setToken(response.token);
+          // si el backend devuelve el rol, guardarlo
+          if ((response as any).rol) {
+            this.authService.setRole((response as any).rol);
+          }
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+          try {
+            if (returnUrl) {
+              // si hay returnUrl, respetarlo
+              this.router.navigateByUrl(returnUrl);
+            } else {
+              // redirigir según rol recibido (ADMINISTRADOR -> /admin, en otro caso -> /)
+              const rol = (response as any).rol ?? this.authService.getRole();
+              if (rol && String(rol).toUpperCase().includes('ADMIN')) {
+                this.router.navigate(['/admin']);
+              } else {
+                this.router.navigate(['/']);
+              }
+            }
+          } catch (e) {
+            this.router.navigate(['/']);
+          }
         } else {
           this.errorMessage = 'No se recibio el jwt';
         }
@@ -55,7 +85,65 @@ export class LoginComponent {
           err,
           'Error al iniciar sesión. Intenta nuevamente.'
         );
-      }
+      },
     });
+  }
+
+  async openForgotPassword(event: Event): Promise<void> {
+    event.preventDefault();
+    const currentEmail = this.loginForm.get('correo')?.value || '';
+
+    const result = await Swal.fire<string>({
+      title: 'Recuperar contraseña',
+      input: 'email',
+      inputLabel: 'Introduce tu correo',
+      inputValue: currentEmail,
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF4D00',
+      cancelButtonColor: '#010102ff',
+      customClass: {
+        popup: 'custom-swal-popup',
+        title: 'custom-swal-title',
+        input: 'custom-swal-input',
+        confirmButton: 'custom-swal-confirm',
+        cancelButton: 'custom-swal-cancel',
+      },
+      preConfirm: async (value) => {
+        if (!value) {
+          Swal.showValidationMessage('El correo es requerido');
+          return;
+        }
+        try {
+          // convertir Observable a Promise
+          await lastValueFrom(this.authSvc.forgotPassword(value));
+          return value;
+        } catch (err: any) {
+          const msg =
+            err?.error?.mensaje ??
+            err?.message ??
+            'Error al enviar la solicitud';
+          Swal.showValidationMessage(msg);
+          throw err;
+        }
+      },
+    });
+
+    if (result && result.value) {
+      Swal.fire({
+        icon: 'success',
+        iconColor: '#FF4D00',
+        title: 'Enviado',
+        text: 'Verificado, recibirás un email con instrucciones, Por favor verificalo.',
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#FF4D00',
+        customClass: {
+          popup: 'custom-swal-popup',
+          title: 'custom-swal-title',
+          confirmButton: 'custom-swal-confirm',
+        },
+      });
+    }
   }
 }

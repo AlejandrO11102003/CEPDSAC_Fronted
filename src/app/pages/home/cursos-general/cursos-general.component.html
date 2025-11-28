@@ -1,90 +1,139 @@
 <section class="container cursos-container">
   <div class="row">
     <aside class="col-lg-3 mb-4">
-      <h3 class="fw-bold">Nuestros</h3>
-      <h2 class="fw-bolder text-highlight">Cursos</h2>
+      <h3 class="fw-bold text-dark">Nuestros</h3>
+      <h2 class="fw-bolder text-highlight mb-4">Cursos</h2>
 
-      <div class="card mb-3 p-3">
-        <h5 class="fw-bold mb-3">Categorías</h5>
-        <div class="form-check mb-2" *ngFor="let categoria of categorias">
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-3 bg-light">
+        <h5 class="fw-bold mb-3 text-primary">
+          <i class="fas fa-filter me-2"></i>Categorías
+        </h5>
+
+        <div *ngIf="isLoading" class="text-muted small">Cargando...</div>
+
+        <div class="form-check mb-2" *ngFor="let cat of categorias">
           <input
             class="form-check-input"
             type="checkbox"
-            [value]="categoria.name"
-            [id]="categoria.id"
+            [id]="'cat-' + cat.id"
+            [checked]="cat.seleccionada"
+            (change)="toggleCategoria(cat)"
           />
-          <label class="form-check-label" [for]="categoria.id">
-            {{ categoria.name }}
+          <label class="form-check-label" [for]="'cat-' + cat.id">
+            {{ cat.nombre }}
           </label>
         </div>
-      </div>
 
-      <div class="card mb-3 p-3">
-        <h5 class="fw-bold mb-3">Precio</h5>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="precio"
-            id="gratis"
-          />
-          <label class="form-check-label" for="gratis">Gratis</label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="precio"
-            id="pagados"
-          />
-          <label class="form-check-label" for="pagados">Pagados</label>
+        <div
+          *ngIf="!isLoading && categorias.length === 0"
+          class="text-muted small"
+        >
+          Sin categorías disponibles
         </div>
       </div>
 
-      <button class="btn btn-outline-danger w-100">
-        Vaciar todos los filtros
+      <button
+        class="btn btn-outline-danger w-100 fw-bold rounded-pill"
+        (click)="limpiarFiltros()"
+      >
+        <i class="fas fa-trash-alt me-2"></i> Limpiar Filtros
       </button>
     </aside>
 
     <section class="col-lg-9">
       <div
-        class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-2"
+        class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3 bg-white p-3 rounded-4 shadow-sm"
       >
-        <div class="flex-grow-1">
-          <input type="text" class="form-control" placeholder="🔍 Buscar..." />
+        <div class="flex-grow-1 position-relative">
+          <i
+            class="fas fa-search position-absolute text-muted"
+            style="left: 15px; top: 12px"
+          ></i>
+          <input
+            type="text"
+            class="form-control border-0 bg-light ps-5 rounded-pill"
+            placeholder="Buscar curso..."
+            [(ngModel)]="filtroTexto"
+            (keyup)="aplicarFiltros()"
+          />
         </div>
         <div>
-          <select class="form-select">
-            <option selected>
-              Fecha de lanzamiento (Más recientes primero)
-            </option>
-            <option>Fecha de lanzamiento (Más antiguos primero)</option>
-            <option>Precio (Menor a mayor)</option>
-            <option>Precio (Mayor a menor)</option>
-            <option>Duración (Más corta primero)</option>
+          <select
+            class="form-select border-0 bg-light rounded-pill fw-bold text-secondary"
+            style="cursor: pointer"
+            [(ngModel)]="order"
+            (change)="aplicarFiltros()"
+          >
+            <option value="recientes">Más recientes</option>
+            <option value="antiguos">Más antiguos</option>
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
           </select>
         </div>
       </div>
 
-      <div class="row g-4">
-        <div class="col-sm-6 col-md-4" *ngFor="let curso of cursos">
-          <div class="card curso-card h-100">
-            <img
-              [src]="curso.imgSrc"
-              class="card-img-top"
-              [alt]="curso.title"
-            />
-            <div class="card-body">
-              <h6 class="card-title fw-bold">{{ curso.title }}</h6>
+      <div *ngIf="isLoading" class="text-center mt-5">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+
+      <div class="row g-4" *ngIf="!isLoading">
+        <div class="col-sm-6 col-md-4" *ngFor="let curso of cursosFiltrados">
+          <div class="card curso-card h-100 border-0 shadow-sm">
+            <div class="card-img-wrapper">
+              <img
+                [src]="getImg(curso)"
+                class="card-img-top"
+                [alt]="curso.titulo"
+                onerror="this.src='assets/images/curso-default.jpg'"
+              />
+
+              <div class="category-badge" *ngIf="curso.categoria">
+                {{ curso.categoria!.nombre }}
+              </div>
+
+              <div class="img-overlay">
+                <a
+                  [routerLink]="['/curso', curso.idCursoDiplomado]"
+                  class="btn btn-light rounded-circle btn-icon"
+                >
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
             </div>
 
-            <div
-              class="card-footer d-flex justify-content-between align-items-center"
-            >
-              <button class="btn btn-sm btn-primary">+ Info</button>
+            <div class="card-body d-flex flex-column pt-4">
+              <h5 class="card-title fw-bold text-dark mb-3">
+                {{ curso.titulo }}
+              </h5>
+
+              <div class="mt-auto">
+                <hr class="text-muted opacity-25" />
+                <div class="text-end">
+                  <a
+                    [routerLink]="['/curso', curso.idCursoDiplomado]"
+                    class="text-primary fw-bold text-decoration-none small"
+                  >
+                    VER DETALLES
+                    <i
+                      class="fas fa-chevron-right ms-1"
+                      style="font-size: 0.8em"
+                    ></i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        *ngIf="!isLoading && cursosFiltrados.length === 0"
+        class="text-center py-5"
+      >
+        <div class="bg-light rounded-circle d-inline-flex p-4 mb-3">
+          <i class="fas fa-search fa-2x text-muted"></i>
+        </div>
+        <h4 class="text-muted">No se encontraron cursos</h4>
       </div>
     </section>
   </div>

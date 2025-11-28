@@ -20,7 +20,7 @@
               ></path>
             </svg>
           </div>
-          <div class="stat-value fw-bold">+3,000</div>
+          <div class="stat-value fw-bold">+{{ metrics.estudiantes | number }}</div>
           <div class="stat-label">Estudiantes</div>
         </div>
       </div>
@@ -46,7 +46,7 @@
               <path d="m14 13 2 2-2 2"></path>
             </svg>
           </div>
-          <div class="stat-value fw-bold">+5,000</div>
+          <div class="stat-value fw-bold">+{{ metrics.certificaciones | number }}</div>
           <div class="stat-label">Certificaciones</div>
         </div>
       </div>
@@ -72,7 +72,7 @@
               ></path>
             </svg>
           </div>
-          <div class="stat-value fw-bold">+120</div>
+          <div class="stat-value fw-bold">+{{ metrics.instructores | number }}</div>
           <div class="stat-label">Instructores</div>
         </div>
       </div>
@@ -94,7 +94,7 @@
               <path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"></path>
             </svg>
           </div>
-          <div class="stat-value fw-bold">+760</div>
+          <div class="stat-value fw-bold">+{{ metrics.cursos | number }}</div>
           <div class="stat-label">Cursos</div>
         </div>
       </div>

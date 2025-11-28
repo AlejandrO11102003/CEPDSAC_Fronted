@@ -7,11 +7,11 @@
         <div class="card p-3 shadow-sm border-0">
           <div class="d-flex align-items-center">
             <div class="stats-icon bg-success-subtle text-success">
-              <i class="bi bi-cash-stack"></i>
+              <i class="bi bi-people-fill"></i>
             </div>
             <div class="ms-3">
-              <h6 class="text-muted mb-0">Ventas de Hoy</h6>
-              <span class="fw-bold fs-4">S/ 1,235</span>
+              <h6 class="text-muted mb-0">Estudiantes con matrícula</h6>
+              <span class="fw-bold fs-4">{{ loading ? '...' : (metrics?.estudiantes ?? '-') }}</span>
             </div>
           </div>
         </div>
@@ -21,11 +21,11 @@
         <div class="card p-3 shadow-sm border-0">
           <div class="d-flex align-items-center">
             <div class="stats-icon bg-primary-subtle text-primary">
-              <i class="bi bi-person-plus-fill"></i>
+              <i class="bi bi-award"></i>
             </div>
             <div class="ms-3">
-              <h6 class="text-muted mb-0">Nuevos usuarios</h6>
-              <span class="fw-bold fs-4">32</span>
+              <h6 class="text-muted mb-0">Programaciones de cursos activas</h6>
+              <span class="fw-bold fs-4">{{ loading ? '...' : (metrics?.certificaciones ?? '-') }}</span>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
             </div>
             <div class="ms-3">
               <h6 class="text-muted mb-0">Cursos Activos</h6>
-              <span class="fw-bold fs-4">45</span>
+              <span class="fw-bold fs-4">{{ loading ? '...' : (metrics?.cursos ?? '-') }}</span>
             </div>
           </div>
         </div>
@@ -49,11 +49,11 @@
         <div class="card p-3 shadow-sm border-0">
           <div class="d-flex align-items-center">
             <div class="stats-icon bg-purple-subtle text-purple">
-              <i class="bi bi-award-fill"></i>
+              <i class="bi bi-person-badge"></i>
             </div>
             <div class="ms-3">
-              <h6 class="text-muted mb-0">Diplomados Activos</h6>
-              <span class="fw-bold fs-4">12</span>
+              <h6 class="text-muted mb-0">Instructores</h6>
+              <span class="fw-bold fs-4">{{ loading ? '...' : (metrics?.instructores ?? '-') }}</span>
             </div>
           </div>
         </div>

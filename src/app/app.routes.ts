@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 // Layouts
 import { MainComponent } from './layout/main/main.component';
 import { AdminComponent } from './layout/admin/admin.component';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 // Pages de la Home
 import { HeroComponent } from './pages/home/hero/hero.component';
@@ -10,10 +11,12 @@ import { CursoComponent } from './pages/home/curso/curso.component';
 import { DiplomadoComponent } from './pages/home/diplomado/diplomado.component';
 import { CursosGeneralComponent } from './pages/home/cursos-general/cursos-general.component';
 import { DiplomadosGeneralComponent } from './pages/home/diplomados-general/diplomados-general.component';
+import { MatriculaGeneralComponent } from './pages/home/matricula-general/matricula-general.component';
 
 // Login y Register
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { RecuperarPassComponent } from './auth/recuperar-pass/recuperar-pass.component';
 
 // Pages del Admin
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
@@ -21,6 +24,8 @@ import { AdminCursosComponent } from './pages/admin/admin-cursos/admin-cursos.co
 import { AdminDiplomadosComponent } from './pages/admin/admin-diplomados/admin-diplomados.component';
 import { AdminEstudiantesComponent } from './pages/admin/admin-estudiantes/admin-estudiantes.component';
 import { AdminProfesoresComponent } from './pages/admin/admin-profesores/admin-profesores.component';
+import { AdminTestimoniosComponent } from './pages/admin/admin-testimonios/admin-testimonios.component';
+import { AdminConfiguracionComponent } from './pages/admin/admin-configuracion/admin-configuracion.component';
 
 export const routes: Routes = [
   {
@@ -35,10 +40,12 @@ export const routes: Routes = [
       {
         path: 'curso/:id',
         component: CursoComponent,
+        pathMatch: 'full',
       },
       {
         path: 'diplomado/:id',
         component: DiplomadoComponent,
+        pathMatch: 'full',
       },
       {
         path: 'cursos',
@@ -50,11 +57,22 @@ export const routes: Routes = [
         component: DiplomadosGeneralComponent,
         pathMatch: 'full',
       },
+      {
+        path: 'matricula/:cursoId/:programacionId',
+        component: MatriculaGeneralComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'matricula/:cursoId/:programacionId',
+        component: MatriculaGeneralComponent,
+        pathMatch: 'full',
+      },
     ],
   },
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -80,10 +98,21 @@ export const routes: Routes = [
         path: 'profesores',
         component: AdminProfesoresComponent,
         pathMatch: 'full',
-      }
+      },
+      {
+        path: 'testimonios',
+        component: AdminTestimoniosComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'configuracion',
+        component: AdminConfiguracionComponent,
+        pathMatch: 'full',
+      },
     ],
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'reset-password', component: RecuperarPassComponent },
   { path: '**', component: MainComponent },
 ];

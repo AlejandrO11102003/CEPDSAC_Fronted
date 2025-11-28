@@ -8,6 +8,17 @@ export interface CursoDiplomado {
   };
 }
 
+export interface CursoDiplomadoViewAdmin {
+  idCursoDiplomado: number;
+  idCategoria: number;
+  nombreCategoria: string;
+  tipo: string; // "CURSO", "DIPLOMADO"
+  otorgaCertificado: boolean;
+  titulo: string;
+  urlCurso: string;
+  objetivo: string;
+}
+
 export interface ProgramacionCursoSimple {
   idProgramacionCurso: number;
   modalidad: 'PRESENCIAL' | 'VIRTUAL' | 'VIRTUAL_24_7';
@@ -27,7 +38,7 @@ export interface CursoDetalle {
   idCursoDiplomado: number;
   idCategoria?: number;
   nombreCategoria?: string;
-  tipo: boolean; // false: CURSO, true: DIPLOMADO
+  tipo: string; // "CURSO", "DIPLOMADO"
   otorgaCertificado: boolean;
   titulo: string;
   urlCurso?: string;
