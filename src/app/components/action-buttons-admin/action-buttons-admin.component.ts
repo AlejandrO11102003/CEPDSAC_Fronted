@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-action-buttons-admin',
@@ -43,5 +43,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class ActionButtonsAdminComponent {
   @Output() onEdit = new EventEmitter<void>();
-  @Output() onDelete = new EventEmitter<void>();
+  @Output() onDelete = new EventEmitter<void>();  
+  @Output() edit = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<void>();
+  @Output() view = new EventEmitter<void>();
 }

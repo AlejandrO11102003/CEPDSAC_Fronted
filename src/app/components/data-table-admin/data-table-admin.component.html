@@ -10,21 +10,14 @@
       <tr *ngFor="let item of data">
         <td *ngFor="let col of columns">
           <ng-container *ngIf="col.key === 'otorgaCertificado'; else textVal">
-            <span
-              class="badge"
-              [class.bg-success]="item[col.key]"
-              [class.bg-secondary]="!item[col.key]"
-            >
+            <span class="badge" [class.bg-success]="item[col.key]" [class.bg-secondary]="!item[col.key]">
               {{ item[col.key] ? "Sí" : "No" }}
             </span>
           </ng-container>
           <ng-template #textVal>{{ item[col.key] }}</ng-template>
         </td>
         <td>
-          <app-action-buttons-admin
-            (onEdit)="onEdit.emit(item)"
-            (onDelete)="onDelete.emit(item)"
-          >
+          <app-action-buttons-admin (edit)="edit.emit(item)" (delete)="delete.emit(item)" (view)="view.emit(item)">
           </app-action-buttons-admin>
         </td>
       </tr>

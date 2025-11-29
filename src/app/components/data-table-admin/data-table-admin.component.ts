@@ -13,7 +13,7 @@ export class DataTableAdminComponent {
   @Input() columns: { key: string; label: string }[] = [];
   @Input() data: any[] = [];
 
-  // Eventos hacia el padre
-  @Output() onEdit = new EventEmitter<any>();
-  @Output() onDelete = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();
+  @Output() view = new EventEmitter<any>();
 }

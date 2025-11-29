@@ -24,6 +24,7 @@ export class DiplomadoComponent implements OnInit {
   diplomado = signal<CursoDetalle | null>(null);
   isLoading = signal(true);
   cursoId: number | null = null;
+  programacionSeleccionada: number | null = null;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -42,6 +43,9 @@ export class DiplomadoComponent implements OnInit {
     this.cursoDiplomadoService.obtenerDetalle(id).subscribe({
       next: (data) => {
         this.diplomado.set(data);
+        if (data.programaciones && data.programaciones.length > 0) {
+          this.programacionSeleccionada = data.programaciones[0].idProgramacionCurso;
+        }
         this.isLoading.set(false);
       },
       error: (err: HttpErrorResponse) => {
@@ -53,29 +57,23 @@ export class DiplomadoComponent implements OnInit {
     });
   }
 
+  seleccionarProgramacion(idProgramacion: number): void {
+    this.programacionSeleccionada = idProgramacion;
+  }
+
   matricularPrimer(): void {
     const d = this.diplomado();
     if (!d || !this.cursoId) {
       this.toast.error('Datos no cargados correctamente.');
       return;
     }
-    const programaciones = d.programaciones || [];
-    if (programaciones.length === 0) {
-      this.toast.error('No hay inicios programados actualmente.');
+    
+    if (!this.programacionSeleccionada) {
+      this.toast.error('Por favor selecciona una programación antes de matricularte.');
       return;
     }
-    const primerProg = programaciones[0];
-    this.router.navigate([
-      '/matricula',
-      this.cursoId,
-      primerProg.idProgramacionCurso,
-    ]);
-  }
-
-  irAMatricula(progId: number) {
-    if (this.cursoId && progId) {
-      this.router.navigate(['/matricula', this.cursoId, progId]);
-    }
+    
+    this.router.navigate(['/matricula', this.cursoId, this.programacionSeleccionada]);
   }
 
   getModalidadLabel(modalidad: string): string {

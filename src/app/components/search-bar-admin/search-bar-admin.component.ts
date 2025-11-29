@@ -8,8 +8,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SearchBarAdminComponent {
   @Input() placeholderText: string = 'Search...';
-  @Input() nuevoBotonName: string = 'Generic button';
+  @Input() nuevoBotonName: string = 'Generic button'
+  
+  @Output() search = new EventEmitter<string>();
+  @Output() create = new EventEmitter<void>();
 
-  // Evento para avisar al padre que se hizo click en Nuevo
-  @Output() onNewClick = new EventEmitter<void>();
+  onSearchInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.search.emit(value);
+  }
 }
