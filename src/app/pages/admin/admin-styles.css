@@ -49,8 +49,18 @@
   max-width: 1400px;
   margin: 0 auto;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+.titulo_admin {
+  color: #013162;
+  border-bottom: 1px solid #ff4d00;
+  font-weight: 600;
+  padding: 22px;
 }
 
+.contenido-admin {
+  margin: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 .contenido-admin {
   margin: 25px;
   display: flex;

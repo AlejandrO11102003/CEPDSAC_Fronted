@@ -1,21 +1,26 @@
 import { Component, inject, OnInit, signal, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../core/services/toast.service';
 import { ErrorHandlerService } from '../../core/services/error-handler.service';
 import { PaisService, Pais } from '../../core/services/pais.service';
-import { TipoIdentificacionService, TipoIdentificacion, TipoIdentificacionInicial } from '../../core/services/tipo-identificacion.service';
+import { TipoIdentificacionService } from '../../core/services/tipo-identificacion.service';
 import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, NavbarComponent, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
@@ -37,23 +42,40 @@ export class RegisterComponent {
     numero_celular: ['', Validators.required],
     numero_identificacion: ['', Validators.required],
     id_codigo_pais: [51],
-    id_tipo_identificacion: [1]
+    id_tipo_identificacion: [1],
   });
 
   isSubmitting = signal(false);
 
   paises: Pais[] = [];
-  tiposIdentificacion: Array<{ idTipoIdentificacion: number; nombre?: string; iniciales?: string }> = [];
+  tiposIdentificacion: Array<{
+    idTipoIdentificacion: number;
+    nombre?: string;
+    iniciales?: string;
+  }> = [];
 
   fieldErrors = signal<{ [key: string]: string }>({});
   generalError = signal<string | null>(null);
 
   submit() {
-    console.log('Submitting form, valid=', this.registerForm.valid, 'value=', this.registerForm.value);
+    console.log(
+      'Submitting form, valid=',
+      this.registerForm.valid,
+      'value=',
+      this.registerForm.value
+    );
     this.fieldErrors.set({});
     this.generalError.set(null);
     this.isSubmitting.set(true);
-    const { nombre, apellido, correo, password, numero_celular, numero_identificacion, id_tipo_identificacion } = this.registerForm.value;
+    const {
+      nombre,
+      apellido,
+      correo,
+      password,
+      numero_celular,
+      numero_identificacion,
+      id_tipo_identificacion,
+    } = this.registerForm.value;
     const dto = {
       nombre,
       apellido,
@@ -74,35 +96,52 @@ export class RegisterComponent {
       error: (err: any) => {
         this.isSubmitting.set(false);
         const validation = this.errorHandler.getValidationErrors(err) || {};
-        console.log('Backend validation errors:', validation, 'raw error:', err.error);
+        console.log(
+          'Backend validation errors:',
+          validation,
+          'raw error:',
+          err.error
+        );
         this.fieldErrors.set(validation);
-        Object.keys(validation).forEach(f => {
+        Object.keys(validation).forEach((f) => {
           const control = this.registerForm.get(f);
           if (control) {
             control.setErrors({ server: true });
             control.markAsTouched();
           }
         });
-        const msg = this.errorHandler.getErrorMessage(err, 'Error al registrarse');
+        const msg = this.errorHandler.getErrorMessage(
+          err,
+          'Error al registrarse'
+        );
         this.generalError.set(msg);
         this.toast.error(msg);
-      }
+      },
     });
   }
 
   ngOnInit(): void {
     this.loadPaises();
     this.loadTiposIdentificacion();
-    this.registerForm.statusChanges?.subscribe(status => {
-      console.log('registerForm.statusChanges ->', status, 'valid=', this.registerForm.valid);
+    this.registerForm.statusChanges?.subscribe((status) => {
+      console.log(
+        'registerForm.statusChanges ->',
+        status,
+        'valid=',
+        this.registerForm.valid
+      );
     });
     if (isPlatformBrowser(this.platformId)) {
-      try { (window as any).__regComp = this; } catch (e) { /* ignore */ }
+      try {
+        (window as any).__regComp = this;
+      } catch (e) {
+        /* ignore */
+      }
     }
 
     this.registerForm.valueChanges?.subscribe(() => {
       const current = { ...this.fieldErrors() };
-      Object.keys(current).forEach(k => {
+      Object.keys(current).forEach((k) => {
         const control = this.registerForm.get(k);
         if (control && control.dirty) {
           delete current[k];
@@ -128,14 +167,20 @@ export class RegisterComponent {
       error: (err) => {
         console.error('Error loading paises:', err);
         this.paises = [];
-        const msg = this.errorHandler.getErrorMessage(err, 'Error cargando países');
+        const msg = this.errorHandler.getErrorMessage(
+          err,
+          'Error cargando países'
+        );
         this.toast.error(msg);
       },
     });
   }
 
   private loadTiposIdentificacion() {
-    console.log('Request: GET', `${environment.apiUrl}/tipos-identificacion/iniciales`);
+    console.log(
+      'Request: GET',
+      `${environment.apiUrl}/tipos-identificacion/iniciales`
+    );
     this.tipoService.getIniciales().subscribe({
       next: (res) => {
         console.log('Response /tipos-identificacion/iniciales:', res);
@@ -144,10 +189,12 @@ export class RegisterComponent {
       error: (err) => {
         console.error('Error loading tipos-identificacion iniciales:', err);
         this.tiposIdentificacion = [];
-        const msg = this.errorHandler.getErrorMessage(err, 'Error cargando tipos de identificación');
+        const msg = this.errorHandler.getErrorMessage(
+          err,
+          'Error cargando tipos de identificación'
+        );
         this.toast.error(msg);
       },
     });
   }
-
 }

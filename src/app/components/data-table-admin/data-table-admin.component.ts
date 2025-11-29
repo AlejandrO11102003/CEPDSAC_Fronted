@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ActionButtonsAdminComponent } from '../action-buttons-admin/action-buttons-admin.component';
 import { CommonModule } from '@angular/common';
+import { ActionButtonsAdminComponent } from '../action-buttons-admin/action-buttons-admin.component';
 
 @Component({
   selector: 'app-data-table-admin',
-  imports: [ActionButtonsAdminComponent , CommonModule],
+  standalone: true,
+  imports: [ActionButtonsAdminComponent, CommonModule],
   templateUrl: './data-table-admin.component.html',
   styleUrl: './data-table-admin.component.css',
 })

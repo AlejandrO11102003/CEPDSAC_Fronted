@@ -1,16 +1,18 @@
-.curso-container {
-  padding: 120px 20px;
+/* --- Variables y Configuración General --- */
+:host {
+  --color-primary: #013162;
+  --color-orange: #ff4d00;
+  --bg-light: #f8f9fa;
 }
 
-.text-highlight {
-  color: #ff4d00;
-  font-size: 3rem;
+.diplomado-page {
+  padding-top: 120px;
+  background-color: #ffffff;
+  min-height: 100vh;
 }
 
-h5 {
-  color: #013162;
-  font-size: 1.5rem;
-  font-weight: bold;
+.vh-50 {
+  height: 50vh;
 }
 
 .about-box {

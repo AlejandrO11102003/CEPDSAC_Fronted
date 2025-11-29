@@ -1,8 +1,35 @@
-<section class="curso-container container">
-  @if (isLoading()) {
-    <div class="text-center mt-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Cargando...</span>
+
+<section class="curso-page fade-in">
+  <div
+    *ngIf="isLoading()"
+    class="d-flex justify-content-center align-items-center vh-50"
+  >
+    <div
+      class="spinner-border text-primary"
+      role="status"
+      style="width: 3rem; height: 3rem"
+    >
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading() && curso()" class="container pb-5">
+    <div class="header-section text-center mb-5">
+      <span
+        class="badge bg-primary-subtle text-primary-emphasis px-3 py-2 rounded-pill mb-3 fw-bold text-uppercase"
+      >
+        {{ curso()?.tipo ? "DIPLOMADO" : "CURSO ESPECIALIZADO" }}
+      </span>
+      <h1 class="display-4 fw-bolder text-dark mb-3">{{ curso()?.titulo }}</h1>
+      <div class="d-flex justify-content-center gap-4 text-muted small">
+        <span *ngIf="curso()?.nombreCategoria"
+          ><i class="fas fa-tag me-1 text-orange"></i>
+          {{ curso()?.nombreCategoria }}</span
+        >
+        <span *ngIf="curso()?.otorgaCertificado"
+          ><i class="fas fa-certificate me-1 text-orange"></i> Certificado
+          Incluido</span
+        >
       </div>
     </div>
   }

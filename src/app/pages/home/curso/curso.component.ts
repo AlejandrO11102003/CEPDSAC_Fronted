@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-curso',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './curso.component.html',
   styleUrls: ['./curso.component.css'],
@@ -31,15 +32,14 @@ export class CursoComponent implements OnInit {
     } else {
       this.toast.error('ID de curso no válido');
       this.isLoading.set(false);
+      this.router.navigate(['/']);
     }
   }
 
   cargarCurso(id: number): void {
     this.isLoading.set(true);
-
     this.cursoDiplomadoService.obtenerDetalle(id).subscribe({
       next: (data) => {
-        console.log('curso detalle:', data);
         this.curso.set(data);
         if (data.programaciones && data.programaciones.length > 0) {
           this.programacionSeleccionada = data.programaciones[0].idProgramacionCurso;
@@ -51,7 +51,7 @@ export class CursoComponent implements OnInit {
         const mensaje = this.errorHandler.getErrorMessage(err);
         this.toast.error(mensaje);
         this.isLoading.set(false);
-      }
+      },
     });
   }
 
@@ -61,9 +61,9 @@ export class CursoComponent implements OnInit {
 
   getModalidadLabel(modalidad: string): string {
     const labels: Record<string, string> = {
-      'PRESENCIAL': 'Presencial',
-      'VIRTUAL': 'Virtual',
-      'VIRTUAL_24_7': 'Virtual 24/7'
+      PRESENCIAL: 'Presencial',
+      VIRTUAL: 'Virtual',
+      VIRTUAL_24_7: 'Virtual 24/7',
     };
     return labels[modalidad] || modalidad;
   }
@@ -80,15 +80,13 @@ export class CursoComponent implements OnInit {
   getMaterialesArray(): string[] {
     const c = this.curso();
     return c?.materialesIncluidos
-      ? c.materialesIncluidos.split('|').filter(m => m.trim())
+      ? c.materialesIncluidos.split('|').filter((m) => m.trim())
       : [];
   }
 
   getRequisitosArray(): string[] {
     const c = this.curso();
-    return c?.requisitos
-      ? c.requisitos.split('|').filter(r => r.trim())
-      : [];
+    return c?.requisitos ? c.requisitos.split('|').filter((r) => r.trim()) : [];
   }
 
   irAMatricula(cursoId: number | null, programacionId: number) {

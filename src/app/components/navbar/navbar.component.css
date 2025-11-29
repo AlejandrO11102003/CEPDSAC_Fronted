@@ -1,7 +1,8 @@
-/* --- Logo --- */
+/* --- TU DISEÑO ORIGINAL (INTACTO) --- */
+
 .navbar {
-  position: fixed;
-  width: 100%;
+  /* CAMBIO: Se remueve el position: fixed de aquí porque usamos .fixed-top de bootstrap */
+  /* width: 100%; <- Innecesario con fixed-top */
   background-color: white;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -12,17 +13,6 @@
   font-weight: 500;
   color: #212529;
 }
-/*
-.navbar:not(.bg-white) .navbar-logo,
-.navbar:not(.bg-white) .nav-link {
-  color: white !important;
-}
-
-.navbar:not(.bg-white) .navbar-toggler-icon,
-.navbar:not(.bg-white) .navbar-toggler-icon::before,
-.navbar:not(.bg-white) .navbar-toggler-icon::after {
-  background-color: white !important;
-}*/
 
 /* --- Search bar --- */
 .search-container {
@@ -96,6 +86,7 @@
   background: #fff;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   border: none;
+  display: none; /* Por defecto oculto, se muestra con hover */
 }
 
 .mega-menu-title {
@@ -171,9 +162,7 @@
   top: 0;
   right: -100%;
   width: 75%;
-  /* ✅ Ahora ocupa solo el 65% */
   max-width: 500px;
-  /* opcional, para que no sea demasiado ancho en tablets */
   height: 100%;
   background-color: #fff;
   z-index: 1045;
@@ -181,9 +170,7 @@
   display: flex;
   flex-direction: column;
   border-top-left-radius: 16px;
-  /* opcional, estética */
   border-bottom-left-radius: 16px;
-  /* opcional */
 }
 
 .offcanvas-menu.is-open {
@@ -226,11 +213,11 @@
 
 hr {
   border: none;
-  height: 3px; /* Define el grosor de la línea */
-  background-color: gray; /* Cambia el color de la línea */
-  margin-top: 20px; /* Añade espacio arriba */
-  margin-bottom: 20px; /* Añade espacio abajo */
-  width: 100%; /* Define el ancho de la línea */
+  height: 3px;
+  background-color: gray;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
   grid-row: 1;
 }
 
@@ -239,25 +226,18 @@ hr {
   display: flex;
   align-items: center;
   padding: 1.2rem 1.25rem;
-  /* Aumentado para mayor separación */
   text-decoration: none;
   color: #212529;
   border-bottom: 1px solid #f0f0f0;
-  /* Borde más sutil */
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  /* Transición suave */
 }
 
-/* ✅ Efecto Hoover agregado */
 .mobile-nav-item:hover {
   background-color: #f8f9fa;
-  /* Color de fondo claro */
   color: #ff4d00;
-  /* Color de acento de la marca */
 }
 
-/* ✅ El icono también cambia de color en hover */
 .mobile-nav-item:hover .mobile-nav-icon {
   color: #ff4d00;
 }
@@ -404,7 +384,6 @@ hr {
 }
 
 /* --- Responsive --- */
-/* Mega menu más compacto en móviles */
 @media (max-width: 991.98px) {
   .mega-menu {
     max-width: 90%;
@@ -419,4 +398,65 @@ hr {
   .offcanvas-backdrop {
     display: none !important;
   }
+}
+
+/* ========================================================== */
+/* NUEVAS FUNCIONALIDADES (HOVER + TRANSPARENCIA) */
+/* ========================================================== */
+
+/* 1. FUNCIONALIDAD HOVER (Solo Desktop) */
+@media (min-width: 992px) {
+  /* Al pasar el mouse sobre el .nav-item (hover-trigger), mostrar el menú */
+  .hover-trigger:hover .mega-menu,
+  .hover-trigger:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* Corrección de espacio */
+    animation: fadeIn 0.3s ease;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 2. FUNCIONALIDAD TRANSPARENCIA */
+/* Esta clase se aplica dinámicamente en el Home cuando está arriba */
+.navbar-transparent {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Texto blanco */
+.navbar-transparent .nav-link,
+.navbar-transparent .search-icon,
+.navbar-transparent .fa-shopping-cart {
+  color: #ffffff !important;
+}
+
+/* Icono toggler blanco */
+.navbar-transparent .navbar-toggler-icon,
+.navbar-transparent .navbar-toggler-icon::before,
+.navbar-transparent .navbar-toggler-icon::after {
+  background-color: #ffffff !important;
+}
+
+/* Input semitransparente */
+.navbar-transparent .search-input {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+}
+.navbar-transparent .search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Cuando pasa el mouse por encima del link transparente, se pone naranja (opcional) */
+.navbar-transparent .nav-link:hover {
+  color: #ff4d00 !important;
 }

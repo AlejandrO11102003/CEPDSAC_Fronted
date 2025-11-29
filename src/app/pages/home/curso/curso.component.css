@@ -1,16 +1,50 @@
-.curso-container {
-  padding: 120px 20px;
+/* --- Variables y Configuración General --- */
+:host {
+  --color-primary: #013162;
+  --color-orange: #ff4d00;
+  --bg-light: #f8f9fa;
 }
 
-.text-highlight {
-  color: #ff4d00;
-  font-size: 3rem;
+.curso-page {
+  padding-top: 120px; /* Espacio para el navbar fixed */
+  background-color: #ffffff;
+  min-height: 100vh;
 }
 
-h5 {
-  color: #013162;
-  font-size: 1.5rem;
-  font-weight: bold;
+.vh-50 {
+  height: 50vh;
+}
+
+/* --- Tipografía y Colores --- */
+.text-orange {
+  color: var(--color-orange) !important;
+}
+.text-primary {
+  color: var(--color-primary) !important;
+}
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #013162 0%, #004e9a 100%);
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: var(--color-orange);
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+/* --- Fondos sutiles para badges --- */
+.bg-orange-subtle {
+  background-color: rgba(255, 77, 0, 0.1);
+}
+.bg-blue-subtle {
+  background-color: rgba(1, 49, 98, 0.1);
+}
+.bg-success-subtle {
+  background-color: rgba(25, 135, 84, 0.1);
 }
 
 .about-box {
@@ -18,20 +52,17 @@ h5 {
   background: rgba(255, 77, 0, 0.45);
 }
 
-.materials-box,
-.requisitos-box {
-  border-radius: 10px;
-  background: rgba(255, 77, 0, 0.45);
+.custom-list.check-blue li::before {
+  color: var(--color-primary);
 }
 
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-ul li::before {
-  content: "• ";
-  color: #ff6600;
+/* --- Tabla Personalizada --- */
+.custom-table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
 }
 
 .section-title {

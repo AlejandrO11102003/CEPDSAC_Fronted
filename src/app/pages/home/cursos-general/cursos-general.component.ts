@@ -1,63 +1,124 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { CursosService, Curso } from '../../../core/services/curso.service';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { CursoDiplomadoService } from '../../../core/services/curso-diplomado.service';
+import { CursoDiplomado } from '../../../core/models/curso-diplomado.model';
+
+interface CategoriaView {
+  id: number;
+  nombre: string;
+  seleccionada: boolean;
+}
 
 @Component({
   selector: 'app-cursos-general',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './cursos-general.component.html',
   styleUrls: ['./cursos-general.component.css'],
 })
 export class CursosGeneralComponent implements OnInit {
-  private cursosService = inject(CursosService);
+  private cursoService = inject(CursoDiplomadoService);
 
-  categorias: { id: string; name: string }[] = [];
-  cursos: Curso[] = [];
+  // Datos
+  cursos: CursoDiplomado[] = [];
+  cursosFiltrados: CursoDiplomado[] = [];
+  categorias: CategoriaView[] = [];
+
   isLoading = true;
-  errorMessage: string | null = null;
+  filtroTexto = '';
+
+  order: string = 'recientes';
 
   ngOnInit(): void {
     this.cargarCursos();
   }
 
-  cargarCursos(): void {
+  cargarCursos() {
     this.isLoading = true;
-    this.errorMessage = null;
-
-    this.cursosService.obtenerCursos().subscribe({
+    this.cursoService.listarCursos().subscribe({
       next: (data) => {
         this.cursos = data;
-        this.extraerCategorias();
+        this.extraerCategorias(data);
+        this.aplicarFiltros();
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('Error al obtener cursos', err);
-        this.errorMessage = 'No se pudieron cargar los cursos';
+      error: (error) => {
+        console.error('Error al cargar cursos:', error);
         this.isLoading = false;
       },
     });
   }
 
-  extraerCategorias(): void {
-    const map = new Map<string, number>();
-    this.cursos.forEach((c) => {
-      if (c.categoria) {
-        map.set(c.categoria, (map.get(c.categoria) || 0) + 1);
+  private extraerCategorias(cursos: CursoDiplomado[]) {
+    const mapCategorias = new Map<number, string>();
+    cursos.forEach((curso) => {
+      if (curso.categoria) {
+        mapCategorias.set(curso.categoria.idCategoria, curso.categoria.nombre);
       }
     });
-
-    this.categorias = Array.from(map.keys()).map((name, idx) => ({
-      id: (idx + 1).toString(),
-      name,
-    }));
+    this.categorias = Array.from(mapCategorias.entries()).map(
+      ([id, nombre]) => ({
+        id,
+        nombre,
+        seleccionada: false,
+      })
+    );
   }
 
-  getImg(curso: Curso): string {
-    return (
-      (curso as any).imgSrc ||
-      'https://placehold.co/600x400/64748B/FFFFFF?text=Curso'
-    );
+  getImg(curso: CursoDiplomado): string {
+    return curso.urlCurso && curso.urlCurso.startsWith('http')
+      ? curso.urlCurso
+      : 'curso-default.webp';
+  }
+
+  aplicarFiltros() {
+    let resultado = [...this.cursos];
+
+    // Filtro Texto
+    if (this.filtroTexto.trim()) {
+      const texto = this.filtroTexto.toLowerCase();
+      resultado = resultado.filter((c) =>
+        c.titulo.toLowerCase().includes(texto)
+      );
+    }
+
+    // Ordenar
+    switch (this.order) {
+      case 'recientes':
+        resultado.sort((a, b) => b.idCursoDiplomado - a.idCursoDiplomado);
+        break;
+      case 'antiguos':
+        resultado.sort((a, b) => a.idCursoDiplomado - b.idCursoDiplomado);
+        break;
+      case 'az':
+        resultado.sort((a, b) => a.titulo.localeCompare(b.titulo));
+        break;
+      case 'za':
+        resultado.sort((a, b) => b.titulo.localeCompare(a.titulo));
+        break;
+    }
+
+    // Filtro Categorías
+    const cats = this.categorias.filter((c) => c.seleccionada).map((c) => c.id);
+    if (cats.length > 0) {
+      resultado = resultado.filter(
+        (c) => c.categoria && cats.includes(c.categoria.idCategoria)
+      );
+    }
+
+    this.cursosFiltrados = resultado;
+  }
+
+  toggleCategoria(cat: CategoriaView) {
+    cat.seleccionada = !cat.seleccionada;
+    this.aplicarFiltros();
+  }
+
+  limpiarFiltros() {
+    this.filtroTexto = '';
+    this.categorias.forEach((c) => (c.seleccionada = false));
+    this.aplicarFiltros();
   }
 }

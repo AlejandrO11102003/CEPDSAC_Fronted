@@ -32,12 +32,8 @@ export class DiplomadosComponent implements OnInit {
   cargarDiplomados(): void {
     this.isLoading = true;
 
-    console.log('cargando diplomados api');
-
     this.cursoDiplomadoService.listarDiplomados().subscribe({
       next: (data) => {
-        console.log('diplomados:', data);
-        console.log('total', data.length);
         this.diplomados = data;
         this.extraerCategorias();
         this.isLoading = false;
@@ -47,15 +43,18 @@ export class DiplomadosComponent implements OnInit {
         const mensaje = this.errorHandler.getErrorMessage(err);
         this.toast.error(mensaje);
         this.isLoading = false;
-      }
+      },
     });
   }
 
   extraerCategorias(): void {
     const categoriasUnicas = new Map<number, string>();
-    this.diplomados.forEach(diplomado => {
+    this.diplomados.forEach((diplomado) => {
       if (diplomado.categoria) {
-        categoriasUnicas.set(diplomado.categoria.idCategoria, diplomado.categoria.nombre);
+        categoriasUnicas.set(
+          diplomado.categoria.idCategoria,
+          diplomado.categoria.nombre
+        );
       }
     });
 
@@ -63,13 +62,10 @@ export class DiplomadosComponent implements OnInit {
       ([id, nombre]) => ({ id: id.toString(), nombre })
     );
 
-    console.log('categorias:', this.categorias);
-    console.log('categorias x diplomado:',
-      this.categorias.map(cat => ({
-        categoria: cat.nombre,
-        cantidad: this.getDiplomadosPorCategoria(cat.nombre).length
-      }))
-    );
+    this.categorias.map((cat) => ({
+      categoria: cat.nombre,
+      cantidad: this.getDiplomadosPorCategoria(cat.nombre).length,
+    }));
   }
 
   getDiplomadosPorCategoria(categoriaNombre: string): CursoDiplomado[] {
