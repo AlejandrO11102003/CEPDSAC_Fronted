@@ -17,10 +17,6 @@ export class CursoDiplomadoService {
   private apiUrl = `${environment.apiUrl}/cursos-diplomados`;
   private apiUrlCategorias = `${environment.apiUrl}/categorias`;
 
-  listarIndex(): Observable<CursoDiplomado[]> {
-    return this.http.get<CursoDiplomado[]>(`${this.apiUrl}/listar-index`);
-  }
-
   listarCursos(): Observable<CursoDiplomadoViewAdmin[]> {
     return this.http.get<CursoDiplomadoViewAdmin[]>(`${this.apiUrl}/listar-cursos`);
   }

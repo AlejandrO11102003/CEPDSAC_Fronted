@@ -79,7 +79,7 @@ export class AdminCursosComponent implements OnInit {
 
   cargarCursos() {
     this.loading.set(true);
-    this.cursoService.listarCursos().subscribe({
+    this.cursoService.listar().subscribe({
       next: (data) => {
         this.cursos.set(data);
         this.loading.set(false);
@@ -122,7 +122,7 @@ export class AdminCursosComponent implements OnInit {
       idCursoDiplomado: curso.idCursoDiplomado,
       titulo: curso.titulo,
       idCategoria: curso.idCategoria,
-      tipo: curso.tipo,
+      tipo: curso.tipo || 'CURSO',
       otorgaCertificado: curso.otorgaCertificado,
       urlCurso: curso.urlCurso,
       objetivo: curso.objetivo

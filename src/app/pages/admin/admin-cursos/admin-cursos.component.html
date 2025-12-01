@@ -33,7 +33,12 @@
             <label class="form-label d-flex align-items-center gap-2">
               <lucide-icon [img]="Type" size="16"></lucide-icon> Título del Curso
             </label>
-            <input type="text" class="form-control" formControlName="titulo" placeholder="Ingrese el título del curso">
+            <input type="text" class="form-control"
+              [class.is-invalid]="cursoForm.get('titulo')?.invalid && cursoForm.get('titulo')?.touched"
+              formControlName="titulo" placeholder="Ingrese el título del curso">
+            @if (cursoForm.get('titulo')?.invalid && cursoForm.get('titulo')?.touched) {
+            <div class="invalid-feedback">El título es requerido</div>
+            }
           </div>
 
           <div class="col-md-12 mb-3">

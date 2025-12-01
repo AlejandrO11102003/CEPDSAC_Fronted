@@ -23,7 +23,6 @@ export interface ProgramacionCursoSimple {
   idProgramacionCurso: number;
   modalidad: 'PRESENCIAL' | 'VIRTUAL' | 'VIRTUAL_24_7';
   duracionCurso: number;
-  horasSemanales: number;
   fechaInicio: string;
   fechaFin: string;
   monto: number;
