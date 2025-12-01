@@ -1,5 +1,5 @@
 /* ========================================
-   CEDPSAC - Sistema de Diseño Admin
+   CEDPSAC - Sistema de Diseño User (Alumnos)
    ======================================== */
 
 /* Variables CSS Globales */
@@ -44,28 +44,28 @@
    CONTENEDORES BASE
    ======================================== */
 
-.admin-container {
+.user-container {
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.titulo_admin {
+.titulo_user {
   color: #013162;
   border-bottom: 1px solid #ff4d00;
   font-weight: 600;
   padding: 22px;
 }
 
-.contenido-admin {
+.contenido-user {
   margin: 25px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.contenido-admin {
+.contenido-user {
   margin: 25px;
   display: flex;
   flex-direction: column;
@@ -102,7 +102,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.titulo_admin {
+.titulo_user {
   color: var(--cedpsac-white);
   background: linear-gradient(
     135deg,
@@ -685,7 +685,7 @@
    ======================================== */
 
 @media (max-width: 768px) {
-  .admin-container {
+  .user-container {
     padding: 1rem;
   }
 
