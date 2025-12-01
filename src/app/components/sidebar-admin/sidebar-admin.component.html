@@ -23,7 +23,11 @@
   <nav class="sidebar-nav">
     <ul>
       <li>
-        <a routerLink="/admin/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          routerLink="/admin/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="bi bi-house-door-fill"></i>
           <span>Dashboard</span>
         </a>
@@ -53,40 +57,62 @@
         </a>
       </li>
       <li>
-        <a (click)="toggleProgramacionSubmenu()" [class.active]="showProgramacionSubmenu"
-          style="cursor: pointer; justify-content: space-between">
+        <a
+          (click)="toggleProgramacionSubmenu()"
+          [class.active]="showProgramacionSubmenu"
+          style="cursor: pointer; justify-content: space-between"
+        >
           <div style="display: flex; align-items: center; gap: 16px">
             <i class="bi bi-calendar3"></i>
             <span>Programación de Cursos</span>
           </div>
-          <i class="bi bi-chevron-down" [class.rotate-icon]="showProgramacionSubmenu"></i>
+          <i
+            class="bi bi-chevron-down"
+            [class.rotate-icon]="showProgramacionSubmenu"
+          ></i>
         </a>
         <ul class="submenu" [class.open]="showProgramacionSubmenu">
           <li>
-            <a routerLink="/admin/programacion-cursos" routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }">
+            <a
+              routerLink="/admin/programacion-cursos"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
               <span>Listado</span>
             </a>
           </li>
           <li>
-            <a routerLink="/admin/programacion-cursos/cancelar-masivo" routerLinkActive="active">
+            <a
+              routerLink="/admin/programacion-cursos/cancelar-masivo"
+              routerLinkActive="active"
+            >
               <span>Cierre de Programación</span>
             </a>
           </li>
         </ul>
       </li>
       <li>
-        <a (click)="toggleMatriculasSubmenu()" [class.active]="showMatriculasSubmenu"
-          style="cursor: pointer; justify-content: space-between">
+        <a
+          (click)="toggleMatriculasSubmenu()"
+          [class.active]="showMatriculasSubmenu"
+          style="cursor: pointer; justify-content: space-between"
+        >
           <div style="display: flex; align-items: center; gap: 16px">
             <i class="bi bi-credit-card-2-front"></i>
             <span>Matrículas</span>
           </div>
-          <i class="bi bi-chevron-down" [class.rotate-icon]="showMatriculasSubmenu"></i>
+          <i
+            class="bi bi-chevron-down"
+            [class.rotate-icon]="showMatriculasSubmenu"
+          ></i>
         </a>
         <ul class="submenu" [class.open]="showMatriculasSubmenu">
           <li>
-            <a routerLink="/admin/matriculas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a
+              routerLink="/admin/matriculas"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
               <span>Listado</span>
             </a>
           </li>
@@ -99,13 +125,21 @@
         </a>
       </li>
       <li>
-        <a routerLink="/admin/descuentos" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          routerLink="/admin/descuentos"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="bi bi-percent"></i>
           <span>Descuentos</span>
         </a>
       </li>
       <li>
-        <a routerLink="/admin/categorias" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          routerLink="/admin/categorias"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           <i class="bi bi-tag-fill"></i>
           <span>Categorías</span>
         </a>
@@ -125,7 +159,7 @@
       <span>Volver al inicio</span>
     </a>
 
-    <button class="sidebar-logout" (click)="onLogout()">
+    <button (click)="onLogout()">
       <i class="bi bi-box-arrow-right"></i>
       <span>Salir</span>
     </button>
