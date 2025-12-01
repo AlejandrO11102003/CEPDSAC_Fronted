@@ -23,7 +23,6 @@ export class SidebarTeacherComponent {
   userName$!: Observable<string>;
   rolUser$!: Observable<string>;
 
-
   ngOnInit() {
     // inicializar observable del nombre de usuario (se hace en ngOnInit para evitar usar this antes del constructor)
     const userId = Number(localStorage.getItem('user_id')) || null;
