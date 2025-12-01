@@ -137,7 +137,8 @@
 
 /* ESTILO DE LOS BOTONES/ENLACES */
 .sidebar-nav a,
-.sidebar-footer a {
+.sidebar-footer a,
+.sidebar-footer button {
   display: flex;
   align-items: center;
   gap: 16px; /* Espacio entre ícono y texto */
@@ -151,7 +152,8 @@
 }
 
 .sidebar-nav a i,
-.sidebar-footer a i {
+.sidebar-footer a i,
+.sidebar-footer button i {
   font-size: 1.4rem; /* Tamaño de ícono */
   width: 24px; /* Ancho fijo para alinear texto */
   text-align: center;
@@ -159,29 +161,24 @@
 
 /* Hover (cuando pasas el mouse) */
 .sidebar-nav a:hover,
-.sidebar-footer a:hover {
+.sidebar-footer a:hover,
+.sidebar-footer button:hover {
   background-color: #f1f3f5; /* Fondo gris claro */
   color: #013162;
 }
 
 /* --- Active State con Gradiente --- */
-.sidebar-nav a.active,
-.sidebar-footer a.active {
+.sidebar-nav a.active {
   background: linear-gradient(135deg, #ff4d00 0%, #ff7e47 100%);
   color: #ffffff;
   box-shadow: 0 4px 15px -3px rgba(255, 77, 0, 0.4);
   border: none;
 }
 
-.sidebar-logout {
-  display: flex;
-  align-items: center;
-  gap: 16px; /* Espacio entre ícono y texto */
-  padding: 14px 20px;
-  border-radius: 12px; /* Bordes redondeados de botón */
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: #495057; /* Color de texto base */
-  transition: all 0.2s ease-in-out;
+.sidebar-footer {
+  border-top: 1px solid #e0e0e0;
+}
+
+.sidebar-footer button {
+  border: none;
 }
