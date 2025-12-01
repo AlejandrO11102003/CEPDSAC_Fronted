@@ -13,7 +13,7 @@
   </div>
 
   <div *ngIf="!isLoading() && curso()" class="container pb-5">
-    <div class=" text-center mb-5">
+    <div class="text-center mb-5">
       <span
         class="badge bg-primary-subtle text-primary-emphasis px-3 py-2 rounded-pill mb-3 fw-bold text-uppercase"
       >
@@ -120,7 +120,9 @@
 
       <div class="col-lg-8">
         <div class="mb-5" *ngIf="curso()?.objetivo">
-          <h4 class="fw-bold text-dark mb-3 position-relative section-title des-text">
+          <h4
+            class="fw-bold text-dark mb-3 position-relative section-title des-text"
+          >
             Descripción del Programa
           </h4>
           <p class="lead text-muted" style="line-height: 1.8">

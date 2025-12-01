@@ -44,7 +44,8 @@ export class DiplomadoComponent implements OnInit {
       next: (data) => {
         this.diplomado.set(data);
         if (data.programaciones && data.programaciones.length > 0) {
-          this.programacionSeleccionada = data.programaciones[0].idProgramacionCurso;
+          this.programacionSeleccionada =
+            data.programaciones[0].idProgramacionCurso;
         }
         this.isLoading.set(false);
       },
@@ -67,13 +68,19 @@ export class DiplomadoComponent implements OnInit {
       this.toast.error('Datos no cargados correctamente.');
       return;
     }
-    
+
     if (!this.programacionSeleccionada) {
-      this.toast.error('Por favor selecciona una programación antes de matricularte.');
+      this.toast.error(
+        'Por favor selecciona una programación antes de matricularte.'
+      );
       return;
     }
-    
-    this.router.navigate(['/matricula', this.cursoId, this.programacionSeleccionada]);
+
+    this.router.navigate([
+      '/matricula',
+      this.cursoId,
+      this.programacionSeleccionada,
+    ]);
   }
 
   getModalidadLabel(modalidad: string): string {
@@ -104,5 +111,32 @@ export class DiplomadoComponent implements OnInit {
   getRequisitosArray(): string[] {
     const d = this.diplomado();
     return d?.requisitos ? d.requisitos.split('|').filter((r) => r.trim()) : [];
+  }
+
+  comprar() {
+    const d = this.diplomado();
+    // Selecciona la primera programación disponible por defecto
+    const first =
+      d?.programaciones && d.programaciones.length > 0
+        ? d.programaciones[0].idProgramacionCurso
+        : null;
+
+    const diplomadoId = d?.idCursoDiplomado ?? null;
+
+    if (!first || !diplomadoId) {
+      this.toast.error('No hay programaciones disponibles para comprar.');
+      return;
+    }
+
+    this.irAMatricula(diplomadoId, first);
+  }
+
+  irAMatricula(diplomadoId: number | null, programacionId: number) {
+    if (!programacionId || !diplomadoId) {
+      this.toast.error('ID de diplomado o programación inválido');
+      return;
+    }
+
+    this.router.navigate(['/matricula', diplomadoId, programacionId]);
   }
 }
