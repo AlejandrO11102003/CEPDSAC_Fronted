@@ -81,7 +81,9 @@ export class AdminCursosComponent implements OnInit {
     this.loading.set(true);
     this.cursoService.listar().subscribe({
       next: (data) => {
-        this.cursos.set(data);
+        //Filter only cursos
+        const cursos = data.filter(c => c.tipo === 'CURSO');
+        this.cursos.set(cursos);
         this.loading.set(false);
       },
       error: (err) => {

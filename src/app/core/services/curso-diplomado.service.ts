@@ -22,7 +22,7 @@ export class CursoDiplomadoService {
   }
 
   listarDiplomados(): Observable<CursoDiplomadoViewAdmin[]> {
-    return this.http.get<CursoDiplomadoViewAdmin[]>(`${this.apiUrl}/listar-diplomados`);
+    return this.http.get<CursoDiplomadoViewAdmin[]>(`${this.apiUrl}/listar`);
   }
 
   obtenerDetalle(id: number): Observable<CursoDetalle> {

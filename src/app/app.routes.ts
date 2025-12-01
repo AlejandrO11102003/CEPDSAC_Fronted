@@ -12,6 +12,7 @@ import { DiplomadoComponent } from './pages/home/diplomado/diplomado.component';
 import { CursosGeneralComponent } from './pages/home/cursos-general/cursos-general.component';
 import { DiplomadosGeneralComponent } from './pages/home/diplomados-general/diplomados-general.component';
 import { MatriculaGeneralComponent } from './pages/home/matricula-general/matricula-general.component';
+import { NotFoundComponent } from './pages/home/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -81,5 +82,5 @@ export const routes: Routes = [
         (m) => m.RecuperarPassComponent
       ),
   },
-  { path: '**', component: MainComponent },
+  { path: '**', component: NotFoundComponent },
 ];

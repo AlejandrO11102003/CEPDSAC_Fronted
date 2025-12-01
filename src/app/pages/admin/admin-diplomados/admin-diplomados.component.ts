@@ -81,7 +81,9 @@ export class AdminDiplomadosComponent implements OnInit {
     this.loading.set(true);
     this.cursoService.listarDiplomados().subscribe({
       next: (data) => {
-        this.diplomados.set(data);
+        //Filter only diplomados
+        const diplomados = data.filter(d => d.tipo === 'DIPLOMADO');
+        this.diplomados.set(diplomados);
         this.loading.set(false);
       },
       error: (err) => {
