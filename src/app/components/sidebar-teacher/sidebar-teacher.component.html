@@ -15,8 +15,8 @@
             <div class="profile-avatar">
                 <span class="status-indicator"></span>
             </div>
-            <span class="profile-name">Docente</span>
-            <span class="profile-status">Última actividad: 30/11/25 8:00pm</span>
+            <span class="profile-name">{{ userName$ | async }}</span>
+            <span >{{ rolUser$ | async }}</span>
         </div>
     </div>
 
@@ -55,8 +55,8 @@
             <span>Configuración</span>
         </a>
     </div>
-
-    <button class="sidebar-logout" (click)="onLogout()">
+`
+    <button class="sidebar-logout" (click)="logout()">
         <i class="bi bi-box-arrow-right"></i>
         <span>Salir</span>
     </button>
