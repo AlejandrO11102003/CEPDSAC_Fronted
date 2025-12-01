@@ -86,7 +86,7 @@ export enum EstadoMatricula {
   PENDIENTE = 'PENDIENTE',
   EN_PROCESO = 'EN_PROCESO',
   PAGADO = 'PAGADO',
-  CANCELADO = 'CANCELADO'
+  CANCELADO = 'CANCELADO',
 }
 
 // interfaz para items de la lista de matriuclas en vista admin
@@ -110,14 +110,11 @@ export const ESTADO_BADGE_CLASSES: Record<EstadoMatricula, string> = {
   [EstadoMatricula.PENDIENTE]: 'badge-warning',
   [EstadoMatricula.EN_PROCESO]: 'badge-info',
   [EstadoMatricula.PAGADO]: 'badge-success',
-  [EstadoMatricula.CANCELADO]: 'badge-danger'
+  [EstadoMatricula.CANCELADO]: 'badge-danger',
 };
 
 export interface MatriculaListResponse {
   idMatricula: number;
-  nombreCompletoAlumno: string;
-  dniAlumno: string;
-  correoAlumno: string;
   tituloCurso: string;
   fechaMatricula: string;
   estado: EstadoMatricula;
@@ -126,6 +123,9 @@ export interface MatriculaListResponse {
   totalCuotas: number;
   proximoVencimiento?: string;
   tieneVencidas: boolean;
+  // campos adicionales
+  horario?: string;
+  nombreDocente?: string;
 }
 
 export interface AlumnoMatriculadoDTO {

@@ -1,18 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { MatriculaService } from '../../../core/services/matricula.service';
 import { AuthService } from '../../../auth/services/auth.service';
+import { Router, RouterLink } from '@angular/router';
 import { MatriculaListResponse } from '../../../core/models/matricula.model';
 
 @Component({
-  selector: 'app-user-cursos',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './user-cursos.component.html',
-  styleUrl: './user-cursos.component.css',
+  selector: 'app-user-matriculas',
+  imports: [RouterLink],
+  templateUrl: './user-matriculas.component.html',
+  styleUrl: './user-matriculas.component.css',
 })
-export class UserCursosComponent implements OnInit {
+export class UserMatriculasComponent {
   private matriculaService = inject(MatriculaService);
   private authService = inject(AuthService);
   private router = inject(Router);

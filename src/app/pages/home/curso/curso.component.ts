@@ -103,6 +103,7 @@ export class CursoComponent implements OnInit {
       this.toast.error('No hay programaciones disponibles para comprar.');
       return;
     }
+
     this.irAMatricula(cursoId, first);
   }
 }

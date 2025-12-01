@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatriculaService } from '../../../core/services/matricula.service';
-import { MatriculaCreateDTO } from '../../../core/models/matricula.model';
+import { MatriculaCreateDTO, PagoResponse } from '../../../core/models/matricula.model';
 import { ToastService } from '../../../core/services/toast.service';
 import { ErrorHandlerService } from '../../../core/services/error-handler.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -45,7 +45,7 @@ export class MatriculaGeneralComponent implements OnInit {
   metodoPagoSeleccionado: MetodoPago | null = null;
   loadingMetodos = signal(false);
 
-  cuotas = signal<any[]>([]);
+  cuotas = signal<PagoResponse[]>([]);
   mostrarCuotas = signal(false);
 
   contactPhoneDisplay = '956782481';
@@ -108,11 +108,6 @@ export class MatriculaGeneralComponent implements OnInit {
       this.toast.error('Programación inválida.');
       return;
     }
-    try {
-      console.log('Auth token (localStorage):', this.authService.getToken());
-      console.log('Auth isLoggedIn():', this.authService.isLoggedIn());
-      console.log('Auth token payload:', this.authService.getTokenPayload());
-    } catch (e) { console.warn('Error printing auth info', e); }
 
     if (!this.authService.isLoggedIn()) {
       Swal.fire({
@@ -139,7 +134,7 @@ export class MatriculaGeneralComponent implements OnInit {
     let idAlumno: number | undefined;
 
     if (payload) {
-      const p = payload as any; 
+      const p = payload as any;
       const possible = p.id ?? p.userId ?? p.usuarioId ?? p.alumnoId;
       if (possible != null) {
         const asNumber = Number(possible);
@@ -153,50 +148,48 @@ export class MatriculaGeneralComponent implements OnInit {
       ...(idAlumno !== undefined && { idAlumno })
     };
 
-    console.log('MatriculaGeneral.submit -> dto', dto, 'programacionSeleccionada=', this.programacionSeleccionada, 'programacionId=', this.programacionId);
-
     this.loading.set(true);
-      this.matriculaService.crear(dto).subscribe({
-        next: (res) => {
-          this.loading.set(false);
-          this.matriculaCreada.set(true);
-          this.matriculaId.set(res.idMatricula);
-          this.toast.success('Matrícula creada correctamente.', 5000);
-          this.cargarCuotas(res.idMatricula);
-        },
-        error: (err: HttpErrorResponse) => {
-          this.loading.set(false);
-          console.error('Matricula creation error:', err.status, err.error);
-          const msg = this.errorHandler.getErrorMessage(err);
-          this.toast.error(msg);
-        }
-      });
+    this.matriculaService.crear(dto).subscribe({
+      next: (res) => {
+        this.loading.set(false);
+        this.matriculaCreada.set(true);
+        this.matriculaId.set(res.idMatricula);
+        this.toast.success('Matrícula creada correctamente.', 5000);
+        this.cargarCuotas(res.idMatricula);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.loading.set(false);
+        console.error('Matricula creation error:', err.status, err.error);
+        const msg = this.errorHandler.getErrorMessage(err);
+        this.toast.error(msg);
+      }
+    });
   }
 
-    notificarPago() {
-      if (!this.metodoPagoSeleccionado) {
-        this.toast.error('Por favor selecciona un método de pago.');
-        return;
-      }
-      const id = this.matriculaId();
-      if (id == null) {
-          this.toast.error('No hay matrícula válida para notificar.');
-          return;
-        }
-        this.matriculaService.notificarPago(id).subscribe({
-        next: () => {
-          this.toast.success('Se notificó a Administración para verificar el pago. Porfavor espere la confirmación que sera enviada a su correo', 5000);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error('Error notificando pago:', err.status, err.error);
-          const msg = this.errorHandler.getErrorMessage(err);
-          this.toast.error(msg);
-        }
-      });
-      
+  notificarPago() {
+    if (!this.metodoPagoSeleccionado) {
+      this.toast.error('Por favor selecciona un método de pago.');
+      return;
     }
-    
-    cargarCuotas(idMatricula: number): void {
+    const id = this.matriculaId();
+    if (id == null) {
+      this.toast.error('No hay matrícula válida para notificar.');
+      return;
+    }
+    this.matriculaService.notificarPago(id).subscribe({
+      next: () => {
+        this.toast.success('Se notificó a Administración para verificar el pago. Porfavor espere la confirmación que sera enviada a su correo', 5000);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error notificando pago:', err.status, err.error);
+        const msg = this.errorHandler.getErrorMessage(err);
+        this.toast.error(msg);
+      }
+    });
+
+  }
+
+  cargarCuotas(idMatricula: number): void {
     this.matriculaService.obtenerDetalleCompleto(idMatricula).subscribe({
       next: (detalle) => {
         this.cuotas.set(detalle.pagos || []);
@@ -233,10 +226,10 @@ export class MatriculaGeneralComponent implements OnInit {
 
   getPrimeraCuota(): number {
     if (!this.programacionSeleccionada) return 0;
-    
+
     const monto = this.programacionSeleccionada.monto;
-    const numeroCuotas = this.programacionSeleccionada.numeroCuotas;
-    
+    const numeroCuotas = this.programacionSeleccionada.numeroCuotas ?? 1;
+
     if (numeroCuotas <= 1) {
       return monto;
     }
@@ -245,13 +238,11 @@ export class MatriculaGeneralComponent implements OnInit {
 
   getTextoMontoPago(): string {
     if (!this.programacionSeleccionada) return 'S/. 0.00';
-    
-    const numeroCuotas = this.programacionSeleccionada.numeroCuotas;
-    
+    const numeroCuotas = this.programacionSeleccionada.numeroCuotas ?? 1;
     if (numeroCuotas <= 1) {
       return `S/. ${this.programacionSeleccionada.monto.toFixed(2)}`;
     }
-    
+
     const primeraCuota = this.getPrimeraCuota();
     return `S/. ${primeraCuota.toFixed(2)} (Primera cuota de ${numeroCuotas})`;
   }
