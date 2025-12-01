@@ -17,9 +17,11 @@
 					<div class="flex-grow-1">
 						<h4 class="course-title mb-1">{{ cursoDetalle?.titulo || 'Desarrollo de Aplicaciones Móviles' }}
 						</h4>
-						<div class="text-muted small">Por {{ programacionSeleccionada?.nombreDocente ?
-							(programacionSeleccionada?.nombreDocente + ' ' + (programacionSeleccionada?.apellidoDocente
-							|| '')) : 'Pepito' }}</div>
+						<div class="text-muted small">
+							Por {{ programacionSeleccionada?.nombreDocente ? (programacionSeleccionada?.nombreDocente +
+							' ' +
+							(programacionSeleccionada?.apellidoDocente || '')) : 'Pepito' }}
+						</div>
 
 						<div class="mt-2 small info-vertical text-muted">
 							<div class="info-item d-flex align-items-center mb-2">
@@ -47,7 +49,8 @@
 								</svg>
 							</div>
 
-							<div *ngIf="programacionSeleccionada" class="info-item d-flex align-items-center">
+							@if (programacionSeleccionada) {
+							<div class="info-item d-flex align-items-center">
 								<!-- calendar icon -->
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
 									xmlns="http://www.w3.org/2000/svg" class="me-2 text-muted">
@@ -61,6 +64,7 @@
 										h:mm a' }}</div>
 								</div>
 							</div>
+							}
 						</div>
 					</div>
 
@@ -72,8 +76,9 @@
 				<div class="card p-3 text-center">
 					@if (programacionId) {
 					<button class="btn btn-pay btn-lg w-100" (click)="submit()"
-						[disabled]="loading() || matriculaCreada()">{{ loading() ? 'Procesando...' : (matriculaCreada()
-						? 'Matriculado' : 'Matricularse') }}</button>
+						[disabled]="loading() || matriculaCreada()">
+						{{ loading() ? 'Procesando...' : (matriculaCreada() ? 'Matriculado' : 'Matricularse') }}
+					</button>
 					} @else {
 					<div class="text-danger">No se recibió una programación válida.</div>
 					}
@@ -129,18 +134,28 @@
 					}
 					}
 
-					<div class="pay-amount mb-3">S/. <span class="fw-bold">{{ programacionSeleccionada?.monto ?? '0.00'
-							}}</span></div>
+					<div class="pay-amount mb-3">
+						@if ((programacionSeleccionada?.numeroCuotas ?? 0) > 1) {
+						<div class="text-muted small mb-1">Primera cuota</div>
+						<span class="fw-bold">S/. {{ getPrimeraCuota().toFixed(2) }}</span>
+						<div class="text-muted small mt-1">de {{ programacionSeleccionada?.numeroCuotas }} cuotas</div>
+						} @else {
+						<div class="text-muted small mb-1">Pago único</div>
+						<span class="fw-bold">S/. {{ (programacionSeleccionada?.monto ?? 0).toFixed(2) }}</span>
+						}
+					</div>
 
 					<button class="btn btn-pay btn-lg w-100" (click)="notificarPago()"
-						[disabled]="!matriculaCreada() || loading() || !metodoPagoSeleccionado">{{ loading() ?
-						'Procesando...' : 'PAGADO' }}</button>
+						[disabled]="!matriculaCreada() || loading() || !metodoPagoSeleccionado">
+						{{ loading() ? 'Procesando...' : 'PAGADO' }}
+					</button>
 
 					<p class="small text-danger mt-3 mb-0">Recuerda enviar la captura de tu pago al siguiente número</p>
 					<p class="small text-muted"><strong>
 							<a [href]="contactPhoneHref" target="_blank" rel="noopener noreferrer" class="text-muted"
-								[attr.aria-label]="'Contactar por WhatsApp al ' + contactPhoneDisplay">{{
-								contactPhoneDisplay }}</a>
+								[attr.aria-label]="'Contactar por WhatsApp al ' + contactPhoneDisplay">
+								{{ contactPhoneDisplay }}
+							</a>
 						</strong></p>
 				</div>
 			</div>

@@ -90,19 +90,13 @@
         </a>
         <ul class="submenu" [class.open]="isProgramacionOpen()">
           <li>
-            <a
-              routerLink="/admin/programacion-cursos"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
+            <a routerLink="/admin/programacion-cursos" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
               <span>Listado</span>
             </a>
           </li>
           <li>
-            <a
-              routerLink="/admin/programacion-cursos/cancelar-masivo"
-              routerLinkActive="active"
-            >
+            <a routerLink="/admin/programacion-cursos/cancelar-masivo" routerLinkActive="active">
               <span>Cierre de Programación</span>
             </a>
           </li>
@@ -125,11 +119,7 @@
         </a>
         <ul class="submenu" [class.open]="isMatriculasOpen()">
           <li>
-            <a
-              routerLink="/admin/matriculas"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
+            <a routerLink="/admin/matriculas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
               <span>Listado</span>
             </a>
           </li>
@@ -146,7 +136,12 @@
           <span>Descuentos</span>
         </a>
       </li>
-
+      <li>
+        <a routerLink="/admin/categorias" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="bi bi-tag-fill"></i>
+          <span>Categorías</span>
+        </a>
+      </li>
       <li>
         <a
           routerLink="/admin/configuracion"
@@ -166,9 +161,9 @@
       <span>Volver al inicio</span>
     </a>
 
-    <a (click)="logout()" class="cursor-pointer">
+    <button class="sidebar-logout" (click)="onLogout()">
       <i class="bi bi-box-arrow-right"></i>
       <span>Salir</span>
-    </a>
+    </button>
   </div>
 </aside>

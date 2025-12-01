@@ -245,6 +245,19 @@
   border: none;
 }
 
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Espacio entre ícono y texto */
+  padding: 14px 20px;
+  border-radius: 12px; /* Bordes redondeados de botón */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #495057; /* Color de texto base */
+  transition: all 0.2s ease-in-out;
+}
+
 .sidebar-footer {
   border-top: 1px solid #e0e0e0;
 }
