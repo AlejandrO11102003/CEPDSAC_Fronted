@@ -12,18 +12,18 @@ export class SponsorService {
   private apiUrl = `${environment.apiUrl}/sponsors`;
 
   listar(): Observable<Sponsor[]> {
-    return this.http.get<Sponsor[]>(`${this.apiUrl}/listar`);
+    return this.http.get<Sponsor[]>(`${this.apiUrl}`);
   }
 
   obtenerPorId(id: number): Observable<Sponsor> {
-    return this.http.get<Sponsor>(`${this.apiUrl}/obtener/${id}`);
+    return this.http.get<Sponsor>(`${this.apiUrl}/${id}`);
   }
 
   crear(nombre: string, imagen: File): Observable<Sponsor> {
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('imagen', imagen);
-    return this.http.post<Sponsor>(`${this.apiUrl}/crear`, formData);
+    return this.http.post<Sponsor>(`${this.apiUrl}`, formData);
   }
 
   actualizar(id: number, nombre: string, imagen?: File): Observable<Sponsor> {
@@ -32,11 +32,11 @@ export class SponsorService {
     if (imagen) {
       formData.append('imagen', imagen);
     }
-    return this.http.put<Sponsor>(`${this.apiUrl}/actualizar/${id}`, formData);
+    return this.http.put<Sponsor>(`${this.apiUrl}/${id}`, formData);
   }
 
   eliminar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   getImageUrl(rutaImagen: string): string {

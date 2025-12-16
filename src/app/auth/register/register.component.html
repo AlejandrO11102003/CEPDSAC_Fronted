@@ -97,7 +97,7 @@
                   <select class="form-select country-code" formControlName="id_codigo_pais" aria-label="Código país">
                     <option value="" disabled>Cod</option>
                     <option *ngFor="let p of paises" [value]="p.idPais">
-                      +{{ p.codigo }}
+                      +{{ p.codigoTelefono }}
                     </option>
                   </select>
                   <input class="form-control" id="numero_celular" type="text" placeholder="9 123 45678"
@@ -143,6 +143,24 @@
                   {{ fieldErrors()["numero_identificacion"] }}
                 </div>
                 }
+
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">País de Residencia</label>
+                <select class="form-select" [ngClass]="{
+                    'is-invalid': registerForm.get('nombrePais')?.hasError('server')
+                  }" id="nombrePais" formControlName="nombrePais">
+                  <option value="" disabled>Selecciona tu país</option>
+                  <option *ngFor="let p of paises" [value]="p.nombre">
+                    {{ p.nombre }}
+                  </option>
+                </select>
+                @if (fieldErrors()['nombrePais']) {
+                <div class="invalid-feedback d-block">
+                  {{ fieldErrors()["nombrePais"] }}
+                </div>
+                }
               </div>
 
               <div class="col-12 d-grid">
@@ -151,7 +169,7 @@
                 </button>
               </div>
 
-              
+
 
             </form>
 

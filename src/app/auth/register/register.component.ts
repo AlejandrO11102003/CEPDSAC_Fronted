@@ -45,6 +45,7 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(8)]],
     numero_celular: ['', Validators.required],
     numero_identificacion: ['', Validators.required],
+    nombrePais: ['', Validators.required],
     id_codigo_pais: [51],
     id_tipo_identificacion: [1],
   });
@@ -112,7 +113,7 @@ export class RegisterComponent {
       password,
       numeroCelular: numero_celular,
       numeroIdentificacion: numero_identificacion,
-      nombrePais: null,
+      nombrePais: this.registerForm.get('nombrePais')?.value,
       idTipoIdentificacion: id_tipo_identificacion,
     };
 

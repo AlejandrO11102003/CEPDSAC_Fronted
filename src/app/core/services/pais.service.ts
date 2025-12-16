@@ -7,6 +7,7 @@ export interface Pais {
   idPais: number;
   nombre: string;
   codigo: string | null;
+  codigoTelefono: string | null;
 }
 
 @Injectable({ providedIn: 'root' })

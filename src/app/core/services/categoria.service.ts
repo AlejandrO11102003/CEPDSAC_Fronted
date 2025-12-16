@@ -12,7 +12,7 @@ export class CategoriaService {
   private apiUrl = `${environment.apiUrl}/categorias`;
 
   listar(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(`${this.apiUrl}/listar`);
+    return this.http.get<Categoria[]>(`${this.apiUrl}`);
   }
 
   listarActivas(): Observable<Categoria[]> {
@@ -20,19 +20,19 @@ export class CategoriaService {
   }
 
   obtener(id: number): Observable<Categoria> {
-    return this.http.get<Categoria>(`${this.apiUrl}/obtener/${id}`);
+    return this.http.get<Categoria>(`${this.apiUrl}/${id}`);
   }
 
   crear(dto: CategoriaCreateDTO): Observable<Categoria> {
-    return this.http.post<Categoria>(`${this.apiUrl}/crear`, dto);
+    return this.http.post<Categoria>(`${this.apiUrl}`, dto);
   }
 
   actualizar(dto: CategoriaUpdateDTO): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.apiUrl}/actualizar`, dto);
+    return this.http.put<Categoria>(`${this.apiUrl}`, dto);
   }
 
   eliminar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   cambiarEstado(id: number): Observable<void> {

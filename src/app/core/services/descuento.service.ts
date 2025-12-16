@@ -15,43 +15,43 @@ export class DescuentoService {
   // --- Descuentos ---
 
   listar(): Observable<Descuento[]> {
-    return this.http.get<Descuento[]>(`${this.apiUrl}/listar`);
+    return this.http.get<Descuento[]>(`${this.apiUrl}`);
   }
 
   obtener(id: number): Observable<Descuento> {
-    return this.http.get<Descuento>(`${this.apiUrl}/obtener/${id}`);
+    return this.http.get<Descuento>(`${this.apiUrl}/${id}`);
   }
 
   crear(dto: DescuentoCreateDTO): Observable<Descuento> {
-    return this.http.post<Descuento>(`${this.apiUrl}/crear`, dto);
+    return this.http.post<Descuento>(`${this.apiUrl}`, dto);
   }
 
   actualizar(dto: DescuentoUpdateDTO): Observable<Descuento> {
-    return this.http.put<Descuento>(`${this.apiUrl}/actualizar`, dto);
+    return this.http.put<Descuento>(`${this.apiUrl}`, dto);
   }
 
   eliminar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   //aplicaciones de descuentos  
   listarAplicaciones(): Observable<DescuentoAplicacion[]> {
-    return this.http.get<DescuentoAplicacion[]>(`${this.apiAplicacionUrl}/listar`);
+    return this.http.get<DescuentoAplicacion[]>(`${this.apiAplicacionUrl}`);
   }
 
   obtenerAplicacion(id: number): Observable<DescuentoAplicacion> {
-    return this.http.get<DescuentoAplicacion>(`${this.apiAplicacionUrl}/obtener/${id}`);
+    return this.http.get<DescuentoAplicacion>(`${this.apiAplicacionUrl}/${id}`);
   }
 
   crearAplicacion(dto: DescuentoAplicacionCreateDTO): Observable<DescuentoAplicacion> {
-    return this.http.post<DescuentoAplicacion>(`${this.apiAplicacionUrl}/crear`, dto);
+    return this.http.post<DescuentoAplicacion>(`${this.apiAplicacionUrl}`, dto);
   }
 
   actualizarAplicacion(id: number, dto: DescuentoAplicacionCreateDTO): Observable<DescuentoAplicacion> {
-    return this.http.put<DescuentoAplicacion>(`${this.apiAplicacionUrl}/actualizar/${id}`, dto);
+    return this.http.put<DescuentoAplicacion>(`${this.apiAplicacionUrl}/${id}`, dto);
   }
 
   eliminarAplicacion(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiAplicacionUrl}/eliminar/${id}`);
+    return this.http.delete<void>(`${this.apiAplicacionUrl}/${id}`);
   }
 }

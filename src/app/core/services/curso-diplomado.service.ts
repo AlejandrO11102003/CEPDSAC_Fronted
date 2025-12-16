@@ -40,19 +40,19 @@ export class CursoDiplomadoService {
   }
 
   listar(): Observable<CursoDiplomadoViewAdmin[]> {
-    return this.http.get<CursoDiplomadoViewAdmin[]>(`${this.apiUrl}/listar`);
+    return this.http.get<CursoDiplomadoViewAdmin[]>(`${this.apiUrl}`);
   }
 
   obtenerPorId(id: number): Observable<CursoDiplomado> {
-    return this.http.get<CursoDiplomado>(`${this.apiUrl}/obtener/${id}`);
+    return this.http.get<CursoDiplomado>(`${this.apiUrl}/${id}`);
   }
 
   crear(curso: Partial<CursoDiplomado>): Observable<CursoDiplomado> {
-    return this.http.post<CursoDiplomado>(`${this.apiUrl}/crear`, curso);
+    return this.http.post<CursoDiplomado>(`${this.apiUrl}`, curso);
   }
 
   eliminar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   actualizar(
@@ -60,13 +60,13 @@ export class CursoDiplomadoService {
     curso: Partial<CursoDiplomado>
   ): Observable<CursoDiplomado> {
     return this.http.put<CursoDiplomado>(
-      `${this.apiUrl}/actualizar/${id}`,
+      `${this.apiUrl}/${id}`,
       curso
     );
   }
 
   listarCategorias(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(`${this.apiUrlCategorias}/listar`);
+    return this.http.get<Categoria[]>(`${this.apiUrlCategorias}`);
   }
 
 

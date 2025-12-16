@@ -21,13 +21,13 @@ export class UsuariosService {
 
   //Listamos a todos los usuarios
   listar(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.apiUrl}/listar`);
+    return this.http.get<Usuario[]>(`${this.apiUrl}`);
   }
 
   //Listamos usuarios por su rol
   listarPorRol(rol: 'ALUMNO' | 'DOCENTE'): Observable<Usuario[]> {
     console.info('UsuariosService.listarPorRol -> rol:', rol);
-    return this.http.get<Usuario[]>(`${this.apiUrl}/listar/${rol}`);
+    return this.http.get<Usuario[]>(`${this.apiUrl}/rol/${rol}`);
   }
 
   // listar paginado para alumnos
